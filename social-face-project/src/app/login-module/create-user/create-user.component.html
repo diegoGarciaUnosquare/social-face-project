@@ -1,0 +1,22 @@
+<div class="container">
+    <mat-stepper class="example-stepper" [orientation]="(stepperOrientation | async)!" linear>
+        <mat-step [stepControl]="createAccountFormGroup" label="Fill information for account creation">
+            <form [formGroup]="createAccountFormGroup">
+                <mat-form-field>
+                    <mat-label>Username</mat-label>
+                    <input matInput placeholder="Enter your username" [formControl]="username" required>
+                    @if (username.invalid && (username.dirty || username.touched)) {
+                        <mat-error *ngIf="username.errors!['required']">Username is required</mat-error>
+                    }
+                </mat-form-field>
+                <div>
+                    <button mat-button>Next</button>
+                </div>
+            </form>
+        </mat-step>
+        <mat-step label="Done!">
+            <h2> Account Created! </h2>
+            <a mat-button color="primary" [routerLink]="['/login']">Click here to navigate back to login screen.</a>
+        </mat-step>
+    </mat-stepper>
+</div>

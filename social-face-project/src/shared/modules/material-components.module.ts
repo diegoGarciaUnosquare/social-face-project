@@ -4,6 +4,7 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
 import { MatListModule } from "@angular/material/list";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner"
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatStepperModule } from "@angular/material/stepper";
 import { MatToolbarModule } from "@angular/material/toolbar";
@@ -20,6 +21,7 @@ import { NgModule } from "@angular/core";
         MatSidenavModule,
         MatListModule,
         MatStepperModule,
+        MatProgressSpinnerModule,
     ],
     exports: [
         MatFormFieldModule,
@@ -31,6 +33,7 @@ import { NgModule } from "@angular/core";
         MatSidenavModule,
         MatListModule,
         MatStepperModule,
+        MatProgressSpinnerModule,
     ]
 })
 
