@@ -4,7 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "start:mock": "interfake ./mocks/interfake-config.json --port 3000",
+    "start:mock-dev": "interfake --file ./mocks/interfake-config.json -w",
+    "start:mock-prod": "interfake --file ./mocks/interfake-config.json",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"

@@ -12,8 +12,10 @@ export class UserService {
   constructor(private httpService: HttpClient) { }
 
   public createUser(userData: IUser): Observable<IUser> {
-    return this.httpService.post('http://localhost:3000/users', userData).pipe(
-      map((response: any) => { 
+    return this.httpService.post('http://localhost:3000/user', userData).pipe(
+      map((response: any) => {
+        console.log('holi respuesta', response);
+        console.log(`${response}`);
         const createdUser: IUser = JSON.parse(response);
         return createdUser;
       }),
