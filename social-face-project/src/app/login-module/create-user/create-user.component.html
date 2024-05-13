@@ -1,5 +1,5 @@
 <section class="create-user-container">
-    <mat-stepper class="user-creation-stepper" [orientation]="(stepperOrientation | async)!" linear>
+    <mat-stepper class="user-creation-stepper" [orientation]="(stepperOrientation | async)!" linear #createUserStepper>
         <mat-step [stepControl]="createAccountFormGroup" label="Fill information for account creation">
             <form [formGroup]="createAccountFormGroup" (ngSubmit)="onSubmit()">
                 <div class="form-group-container">

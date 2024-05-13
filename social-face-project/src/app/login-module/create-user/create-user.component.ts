@@ -1,20 +1,19 @@
 import { Actions, ofType } from '@ngrx/effects';
-import {AsyncPipe, CommonModule} from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import { AsyncPipe, CommonModule } from '@angular/common';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatStepper, StepperOrientation } from '@angular/material/stepper';
 import { createUser, createUserSuccess } from '../../reducers/user-store/user.actions';
-import {map, take} from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 
 import { AppState } from '../../reducers/user-store/user.reducer';
-import {BreakpointObserver} from '@angular/cdk/layout';
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { IUser } from '../../../shared/interfaces/user.interface';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MaterialComponentsModule } from '../../../shared/modules/material-components.module';
-import {Observable} from 'rxjs';
+import { Observable } from 'rxjs';
 import { RouterModule } from '@angular/router';
-import {StepperOrientation} from '@angular/material/stepper';
 import { Store } from '@ngrx/store';
-import { UserService } from '../../../shared/services/user-service.service';
 import { getErrors } from '../../reducers/user-store/user.selectors';
 
 @Component({
@@ -34,8 +33,10 @@ export class CreateUserComponent implements OnInit {
   public birthDate: FormControl = new FormControl('', Validators.required);
   public notificationPreference: FormControl = new FormControl(false);
   public isLoading: boolean = false;
+  @ViewChild('createUserStepper') createUserStepper: MatStepper | undefined;
 
-  public createAccountFormGroup:FormGroup = new FormGroup({
+
+  public createAccountFormGroup: FormGroup = new FormGroup({
     email: this.email,
     firstName: this.firstName,
     lastName: this.lastName,
@@ -44,7 +45,7 @@ export class CreateUserComponent implements OnInit {
     birthDate: this.birthDate,
     notificationPreference: this.notificationPreference,
   });
-  
+
   constructor(
     public breakpointObserver: BreakpointObserver,
     private actions$: Actions,
@@ -53,7 +54,7 @@ export class CreateUserComponent implements OnInit {
   ) {
     this.stepperOrientation = breakpointObserver
       .observe('(min-width: 800px)')
-      .pipe(map(({matches}) => (matches ? 'horizontal' : 'vertical')));
+      .pipe(map(({ matches }) => (matches ? 'horizontal' : 'vertical')));
   }
 
   ngOnInit(): void {
@@ -72,7 +73,7 @@ export class CreateUserComponent implements OnInit {
         birthDate: this.birthDate.value,
         notificationPreference: this.notificationPreference.value
       }
-      this.store.dispatch(createUser({userData: payload}));
+      this.store.dispatch(createUser({ userData: payload }));
     }
   }
 
@@ -81,7 +82,7 @@ export class CreateUserComponent implements OnInit {
       take(1),
       map((error) => {
         if (error) {
-          this.snackBar.open(error.message, 'Close', { duration: 5000 } );
+          this.snackBar.open(error.message, 'Close', { duration: 5000 });
         }
       })
     );
@@ -91,7 +92,9 @@ export class CreateUserComponent implements OnInit {
     return this.actions$.pipe(
       ofType(createUserSuccess),
       map(() => {
-        alert('holi');
+        if(this.createUserStepper) {
+          this.createUserStepper.next();
+        }
       })
     );
   }

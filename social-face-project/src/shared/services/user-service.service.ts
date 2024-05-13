@@ -1,4 +1,4 @@
-import { Observable, catchError, map } from 'rxjs';
+import { Observable, catchError, map, of, switchMap } from 'rxjs';
 
 import { HttpClient } from '@angular/common/http';
 import { IUser } from '../interfaces/user.interface';
@@ -13,15 +13,11 @@ export class UserService {
 
   public createUser(userData: IUser): Observable<IUser> {
     return this.httpService.post('http://localhost:3000/user', userData).pipe(
-      map((response: any) => {
-        console.log('holi respuesta', response);
-        console.log(`${response}`);
-        const createdUser: IUser = JSON.parse(response);
-        return createdUser;
+      switchMap((response: any) => {
+        const createdUser: IUser = response;
+        return of(createdUser);
       }),
-      catchError(error => {
-        throw new Error(error);
-      })
+      catchError(error => of(error))
     );
   }
 }

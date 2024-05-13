@@ -1,7 +1,7 @@
 import * as UserActions from './user.actions';
 
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, map, of, switchMap } from 'rxjs';
+import { catchError, from, map, of, switchMap, take } from 'rxjs';
 
 import { IError } from '../../../shared/interfaces/error.interface';
 import { IUser } from '../../../shared/interfaces/user.interface';
@@ -16,9 +16,9 @@ export class UserEffects {
         ofType(UserActions.createUser),
         map(action => action.userData),
         switchMap((userData: IUser) => this.userService.createUser(userData).pipe(
-                map(createdUser => UserActions.createUserSuccess({ createdUser })),
+            map((createdUser: IUser) =>  UserActions.createUserSuccess({ createdUser })),
         )),
-        catchError(errorData => { 
+        catchError((errorData: any) => {
             const error: IError = {
                 message: errorData.message,
                 status: 500,
@@ -26,6 +26,5 @@ export class UserEffects {
             };
             return of(UserActions.createUserFailure({ error }));
         })
-        ),
-    );
+    ));
 }
