@@ -91,6 +91,7 @@ export class CreateUserComponent implements OnInit {
   private handleUserCreationSuccess(): Observable<void> {
     return this.actions$.pipe(
       ofType(createUserSuccess),
+      take(1),
       map(() => {
         if(this.createUserStepper) {
           this.createUserStepper.next();
