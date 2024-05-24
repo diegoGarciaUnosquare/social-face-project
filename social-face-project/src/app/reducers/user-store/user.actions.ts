@@ -15,3 +15,27 @@ export const createUserFailure = createAction(
   '[Sign up page] Create User Failure',
   props<{ error: IError }>()
 );
+
+export const validateEmail = createAction(
+  '[Forgot password page] Validate Email',
+  props<{ email: string }>()
+);
+export const validateEmailSuccess = createAction(
+  '[Forgot password page] Validate Email Success',
+);
+export const validateEmailFailure = createAction(
+  '[Forgot password page] Validate Email Failure',
+  props<{ error: IError }>()
+);
+
+export const updatePassword = createAction(
+  '[Forgot password page] Update Password',
+  props<{ password: string }>()
+);
+export const updatePasswordSuccess = createAction(
+  '[Forgot password page] Update Password Success',
+);
+export const updatePasswordFailure = createAction(
+  '[Forgot password page] Update Password Failure',
+  props<{ error: IError }>()
+);

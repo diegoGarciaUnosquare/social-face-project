@@ -1,20 +1,19 @@
 import { Actions, ofType } from '@ngrx/effects';
 import { AsyncPipe, CommonModule } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatStepper, StepperOrientation } from '@angular/material/stepper';
-import { createUser, createUserSuccess } from '../../reducers/user-store/user.actions';
+import { createUser, createUserFailure, createUserSuccess } from '../../reducers/user-store/user.actions';
 import { map, take } from 'rxjs/operators';
 
 import { AppState } from '../../reducers/user-store/user.reducer';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { IUser } from '../../../shared/interfaces/user.interface';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { MaterialComponentsModule } from '../../../shared/modules/material-components.module';
 import { Observable } from 'rxjs';
 import { RouterModule } from '@angular/router';
+import { SnackbarService } from '../../../shared/services/snack-bar/snackbar.service';
 import { Store } from '@ngrx/store';
-import { getErrors } from '../../reducers/user-store/user.selectors';
 
 @Component({
   selector: 'app-create-user',
@@ -23,7 +22,7 @@ import { getErrors } from '../../reducers/user-store/user.selectors';
   templateUrl: './create-user.component.html',
   styleUrl: './create-user.component.scss'
 })
-export class CreateUserComponent implements OnInit {
+export class CreateUserComponent implements OnInit, OnDestroy {
   public stepperOrientation: Observable<StepperOrientation>;
   public email: FormControl = new FormControl('', Validators.required);
   public firstName: FormControl = new FormControl('', Validators.required);
@@ -49,7 +48,7 @@ export class CreateUserComponent implements OnInit {
   constructor(
     public breakpointObserver: BreakpointObserver,
     private actions$: Actions,
-    private snackBar: MatSnackBar,
+    private snackbarService: SnackbarService,
     private store: Store<AppState>,
   ) {
     this.stepperOrientation = breakpointObserver
@@ -60,6 +59,10 @@ export class CreateUserComponent implements OnInit {
   ngOnInit(): void {
     this.handleUserCreationError().subscribe();
     this.handleUserCreationSuccess().subscribe();
+  }
+
+  ngOnDestroy(): void {
+    // TODO: Implement unsubscribe logic
   }
 
   public onSubmit(): void {
@@ -78,11 +81,13 @@ export class CreateUserComponent implements OnInit {
   }
 
   private handleUserCreationError(): Observable<void> {
-    return this.store.select(getErrors).pipe(
+    return this.actions$.pipe(
+      ofType(createUserFailure),
       take(1),
-      map((error) => {
-        if (error) {
-          this.snackBar.open(error.message, 'Close', { duration: 5000 });
+      map((userCreationError: any) => {
+        if (userCreationError) {
+          const { error } = userCreationError;
+          this.snackbarService.openSnackBar(error.message);
         }
       })
     );

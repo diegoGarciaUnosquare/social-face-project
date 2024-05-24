@@ -1,11 +1,11 @@
 [
-	{
-		"request": {
-			"url": "/posts",
-			"method": "get"
-		},
-		"response": {
-			"code": 200,
+  {
+    "request": {
+      "url": "/posts",
+      "method": "get"
+    },
+    "response": {
+      "code": 200,
       "body": [
         { "id": 1, "userId": 1, "message": "Post 1", "likes": 5, "comments": [], "date": "2024-04-30T08:00:00Z" },
         { "id": 2, "userId": 2, "message": "Post 2", "likes": 10, "comments": [], "date": "2024-04-29T10:30:00Z" },
@@ -16,20 +16,20 @@
         { "id": 7, "userId": 1, "message": "Post 7", "likes": 4, "comments": [], "date": "2024-04-24T23:30:00Z" }
       ],
       "headers": {
-				"allow-origin": "*",
+        "allow-origin": "*",
         "content-type": "application/json",
         "x-total-count": "7"
-			}
-		}
-	},
-	{
-		"request": {
-			"url": "/user",
-			"method": "post"
-		},
-		"response": {
-			"code": 201,
-			"body": { 
+      }
+    }
+  },
+  {
+    "request": {
+      "url": "/user",
+      "method": "post"
+    },
+    "response": {
+      "code": 201,
+      "body": { 
         "id": 3,
         "firstName": "New", 
         "lastName": "User", 
@@ -45,17 +45,17 @@
         "allow-origin": "*",
         "content-type": "application/json"
       }
-		},
-		"afterResponse": {
-			"endpoints": [
-				{
-					"request": {
-						"url": "/user/1",
-						"method": "get"
-					},
-					"response": {
-						"code": 200,
-						"body": { 
+    },
+    "afterResponse": {
+      "endpoints": [
+        {
+          "request": {
+            "url": "/user/1",
+            "method": "get"
+          },
+          "response": {
+            "code": 200,
+            "body": { 
               "id": 3,
               "firstName": "New", 
               "lastName": "User", 
@@ -66,12 +66,16 @@
               "password": "newpassword", 
               "token": "paosd90asjd0aj0sd",
               "role": 0
+            },
+            "headers": {
+              "allow-origin": "*",
+              "content-type": "application/json"
             }
-					}
-				}
-			]
-		}
-	},
+          }
+        }
+      ]
+    }
+  },
   {
     "request": {
       "url": "/user/1",
@@ -90,6 +94,99 @@
         "password": "newpassword",
         "token": "oaskd09ja0sd0iasd",
         "role": 0
+      },
+      "headers": {
+        "allow-origin": "*",
+        "content-type": "application/json"
+      }
+    }
+  },
+  {
+    "request": {
+      "url": "/user/2",
+      "method": "get"
+    },
+    "response": {
+      "code": 200,
+      "body": {
+        "id": 2,
+        "firstName": "Second",
+        "lastName": "User",
+        "email": "seconduser@example.com",
+        "birthDate": "1995-05-20",
+        "notificationPreference": false,
+        "username": "seconduser",
+        "password": "password2",
+        "token": "sdf98sd9f8sd9f8sd",
+        "role": 1
+      },
+      "headers": {
+        "allow-origin": "*",
+        "content-type": "application/json"
+      }
+    }
+  },
+  {
+    "request": {
+      "url": "/posts",
+      "method": "post"
+    },
+    "response": {
+      "code": 201,
+      "body": {
+        "id": 8,
+        "userId": 3,
+        "message": "New post",
+        "likes": 0,
+        "comments": [],
+        "date": "2024-05-01T08:00:00Z"
+      },
+      "headers": {
+        "allow-origin": "*",
+        "content-type": "application/json"
+      }
+    }
+  },
+  {
+    "request": {
+      "url": "/user/3",
+      "method": "delete"
+    },
+    "response": {
+      "code": 204,
+      "body": null,
+      "headers": {
+        "allow-origin": "*",
+        "content-type": "application/json"
+      }
+    }
+  },
+  {
+    "request": {
+      "url": "/validate-email",
+      "method": "post"
+    },
+    "response": {
+      "code": 200,
+      "body": {
+        "valid": true
+      },
+      "headers": {
+        "allow-origin": "*",
+        "content-type": "application/json"
+      }
+    }
+  },
+  {
+    "request": {
+      "url": "/user/1/password",
+      "method": "put"
+    },
+    "response": {
+      "code": 200,
+      "headers": {
+        "allow-origin": "*",
+        "content-type": "application/json"
       }
     }
   }

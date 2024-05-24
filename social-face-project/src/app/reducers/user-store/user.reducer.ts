@@ -1,5 +1,6 @@
+import * as UserActions from './user.actions';
+
 import { createReducer, on } from '@ngrx/store';
-import { createUser, createUserFailure, createUserSuccess } from './user.actions';
 
 import { IError } from '../../../shared/interfaces/error.interface';
 import { IUser } from '../../../shared/interfaces/user.interface';
@@ -9,25 +10,41 @@ export interface AppState {
     error: IError | null;
 }
 
-export const userState:AppState = {
+export const userState: AppState = {
     user: null,
     error: null,
 };
 
 export const userReducer = createReducer(
     userState,
-    on(createUser, (state) => {
+    on(UserActions.createUser, (state) => {
         return {
             ...state,
         };
     }),
-    on(createUserSuccess, (state, { createdUser }) => {
+    on(UserActions.createUserSuccess, (state, { createdUser }) => {
         return {
             ...state,
             user: createdUser,
         };
     }),
-    on(createUserFailure, (state, { error }) => {
+    on(UserActions.createUserFailure, (state, { error }) => {
+        return {
+            ...state,
+            error,
+        };
+    }),
+    on(UserActions.validateEmail, (state) => { return { ...state }; }),
+    on(UserActions.validateEmailSuccess, (state) => { return { ...state }; }),
+    on(UserActions.validateEmailFailure, (state, { error }) => {
+        return {
+            ...state,
+            error,
+        };
+    }),
+    on(UserActions.updatePassword, (state) => { return { ...state }; }),
+    on(UserActions.updatePasswordSuccess, (state) => { return { ...state }; }),
+    on(UserActions.updatePasswordFailure, (state, { error }) => {
         return {
             ...state,
             error,
