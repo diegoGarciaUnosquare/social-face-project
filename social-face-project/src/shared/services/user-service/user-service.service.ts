@@ -32,7 +32,7 @@ export class UserService {
     );
   }
 
-  public updatePassword(password: string): Observable<void> {
+  public updatePassword(password: string): Observable<string> {
     return this.httpService.put('http://localhost:3000/user/1/password', { password }).pipe(
       map((updatedPassword: any) => updatedPassword),
       catchError(error => of(error))

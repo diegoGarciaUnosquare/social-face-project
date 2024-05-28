@@ -22,7 +22,7 @@ import { Store } from '@ngrx/store';
   templateUrl: './create-user.component.html',
   styleUrl: './create-user.component.scss'
 })
-export class CreateUserComponent implements OnInit, OnDestroy {
+export class CreateUserComponent implements OnInit {
   public stepperOrientation: Observable<StepperOrientation>;
   public email: FormControl = new FormControl('', Validators.required);
   public firstName: FormControl = new FormControl('', Validators.required);
@@ -59,10 +59,6 @@ export class CreateUserComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.handleUserCreationError().subscribe();
     this.handleUserCreationSuccess().subscribe();
-  }
-
-  ngOnDestroy(): void {
-    // TODO: Implement unsubscribe logic
   }
 
   public onSubmit(): void {

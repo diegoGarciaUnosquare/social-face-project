@@ -1,7 +1,6 @@
-import { Component, Signal, WritableSignal, signal } from '@angular/core';
+import { Component, WritableSignal, signal } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
-import { FormGroup } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { UpdatePasswordFormComponent } from './update-password-form/update-password-form.component';
 import { ValidateEmailFormComponent } from './validate-email-form/validate-email-form.component';
@@ -14,11 +13,9 @@ import { ValidateEmailFormComponent } from './validate-email-form/validate-email
   styleUrl: './forgot-password.component.scss'
 })
 export class ForgotPasswordComponent {
-  public formGroup: FormGroup;
   public showUpdatePasswordForm: WritableSignal<boolean>  = signal(false);
 
   constructor() {
-    this.formGroup = new FormGroup({});
   }
 
   public onEmailValidated(isValid: boolean): void {

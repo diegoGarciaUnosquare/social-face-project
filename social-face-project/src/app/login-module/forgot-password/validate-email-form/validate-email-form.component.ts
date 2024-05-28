@@ -48,7 +48,6 @@ export class ValidateEmailFormComponent implements OnInit {
     return this.actions$.pipe(
       ofType(validateEmailSuccess),
       map(() => {
-        console.log('Email validated');
         this.isLoading.update(() => false);
         this.emailValidated.emit(true);
       })

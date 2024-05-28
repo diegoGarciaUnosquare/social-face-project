@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoginFormComponent } from './login-form.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { provideRouter } from '@angular/router';
+import { routes } from '../../app.routes';
 
 describe('LoginFormComponent', () => {
   let component: LoginFormComponent;
@@ -8,7 +11,10 @@ describe('LoginFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LoginFormComponent]
+      imports: [LoginFormComponent, NoopAnimationsModule],
+      providers: [
+        provideRouter(routes),
+      ]
     })
     .compileComponents();
     
@@ -17,7 +23,24 @@ describe('LoginFormComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  describe('onSubmit', () => {
+    it('should call store dispatch when form is valid', () => {
+      component.formGroup.setValue({
+        username: 'test@test.com',
+        password: 'password',
+      });
+  
+      component.onSubmit();
+      expect(component.isLoading()).toBeTrue();
+    });
+
+    it('should not call store dispatch when form is invalid', () => {
+      component.formGroup.setValue({
+        username: '',
+        password: '',
+      });
+      component.onSubmit();
+      expect(component.isLoading()).toBeFalse();
+    });
   });
 });
