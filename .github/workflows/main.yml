@@ -1,0 +1,30 @@
+name: build social-face-project app
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+    
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: '21.x'
+
+      - name: move to project folder
+        run: cd social-face-project
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run unit tests
+        run: npm test -- --no-watch --no-progress --browsers=ChromeHeadless
