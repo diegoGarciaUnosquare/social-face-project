@@ -29,3 +29,14 @@ jobs:
         run: |
           cd ./social-face-project
           npm test -- --no-watch --no-progress --browsers=ChromeHeadless
+
+      - name: Build app
+        run: |
+          cd my-angular-app
+          npm run build
+      
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./social-face-project/dist/social-face-project
