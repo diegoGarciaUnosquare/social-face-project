@@ -19,6 +19,8 @@
           "options": {
             "outputPath": "dist/social-face-project",
             "index": "src/index.html",
+            "baseHref": "/social-face-project/",
+            "deployUrl": "/social-face-project/",
             "browser": "src/main.ts",
             "polyfills": [
               "zone.js"
