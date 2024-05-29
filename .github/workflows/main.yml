@@ -32,7 +32,7 @@ jobs:
 
       - name: Build app
         run: |
-          cd my-angular-app
+          cd ./social-face-project
           npm run build
       
       - name: Deploy to GitHub Pages
