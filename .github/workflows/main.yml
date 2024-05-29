@@ -20,14 +20,12 @@ jobs:
         with:
           node-version: '21.x'
 
-      - name: move to project folder
-        run: cd social-face-project
-
-      - name: list items in the root directory
-        run: ls -l
-
       - name: Install dependencies
-        run: npm ci
+        run: |
+          cd ./social-face-project
+          npm ci
 
       - name: Run unit tests
-        run: npm test -- --no-watch --no-progress --browsers=ChromeHeadless
+        run: |
+          cd ./social-face-project
+          npm test -- --no-watch --no-progress --browsers=ChromeHeadless
