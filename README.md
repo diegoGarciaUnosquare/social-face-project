@@ -21,3 +21,14 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 ## Running end-to-end tests
 
 Section in construction. More information soon.
+
+## CI/CD Pipeline
+CI/CD is being handle with GitHub Actions. The pipeline is triggered when a push is made to the main branch. 
+ The pipeline is responsible for running the tests and deploying the application to the GitHub Pages.
+ This option was chosen because it is a simple and free way to deploy the application, as well as being integrated with the repository.
+
+ You can find the configuration of the pipeline in the file `.github/workflows/main.yml`.
+
+ And you can find the deployed application in the link: [SocialFace](https://diegogarciaunosquare.github.io/social-face-project/)
+
+ CI/CD pipeline runs: [runs](https://github.com/diegoGarciaUnosquare/social-face-project/actions/workflows/main.yml)
