@@ -6,8 +6,11 @@
             <mat-form-field>
                 <mat-label>Email</mat-label>
                 <input matInput placeholder="Enter your email" [formControl]="validateEmailField" data-validate-email-field="">
-                @if (validateEmailField.invalid && (validateEmailField.dirty || validateEmailField.touched)) {
-                    <mat-error *ngIf="validateEmailField.errors!['required']" data-validate-email-error-field="">Email is invalid</mat-error>
+                @if (validateEmailField.hasError('required')) {
+                    <mat-error *ngIf="validateEmailField.errors!['required']" data-validate-email-error-field="">Email is required</mat-error>
+                }
+                @if (validateEmailField.hasError('pattern')) {
+                    <mat-error *ngIf="validateEmailField.errors!['pattern']" data-validate-email-error-field="">Email is invalid</mat-error>
                 }
             </mat-form-field>
         </div>

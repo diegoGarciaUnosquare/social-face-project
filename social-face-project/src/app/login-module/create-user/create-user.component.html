@@ -3,54 +3,77 @@
         <mat-step [stepControl]="createAccountFormGroup" label="Fill information for account creation">
             <form [formGroup]="createAccountFormGroup" (ngSubmit)="onSubmit()">
                 <div class="form-group-container">
-                    <mat-form-field>
+                    <mat-form-field aria-label="Enter username">
                         <mat-label>Username</mat-label>
                         <input type="text" matInput placeholder="Enter your username" [formControl]="username" required>
-                        @if (username.invalid && (username.dirty || username.touched)) {
-                            <mat-error *ngIf="username.errors!['required']">Username is required</mat-error>
+                        @if (username.hasError('required')) {
+                            <mat-error data-username-error-field="">Username is required</mat-error>
                         }
                     </mat-form-field>
-                    <mat-form-field>
+                    <mat-form-field aria-label="Enter password">
                         <mat-label>Password</mat-label>
-                        <input type="password" matInput placeholder="Enter your password" [formControl]="password" required>
-                        @if (password.invalid && (password.dirty || password.touched)) {
-                            <mat-error *ngIf="password.errors!['required']">Password is required</mat-error>
+                        <input type="password" matInput placeholder="Enter your password" [formControl]="password"
+                            required>
+                        @if (password.hasError('required')) {
+                            <mat-error data-password-error-field="">Password is required</mat-error>
+                        }
+                        @if (password.hasError('minlength')) {
+                            <mat-error data-password-error-field="">Password must be at least 8 characters</mat-error>
+                        } @else if (password.hasError('pattern')) {
+                            <mat-error data-password-error-field="">
+                                Password must contain at least one number and one uppercase letter
+                            </mat-error>
                         }
                     </mat-form-field>
-                    <mat-form-field>
+                    <mat-form-field aria-label="Enter email">
                         <mat-label>Email</mat-label>
                         <input type="email" matInput placeholder="Enter your email" [formControl]="email" required>
-                        @if (email.invalid && (email.dirty || email.touched)) {
-                            <mat-error *ngIf="email.errors!['required']">Email is required</mat-error>
+                        @if (email.hasError('required')) {
+                            <mat-error data-email-error-field="">Email is required</mat-error>
+                        }
+
+                        @if (email.hasError('pattern')) {
+                            <mat-error data-email-error-field="">Email is invalid</mat-error>
                         }
                     </mat-form-field>
-                    <mat-form-field>
+                    <mat-form-field aria-label="Enter first name">
                         <mat-label>First Name</mat-label>
                         <input type="text" matInput placeholder="Enter your first name" [formControl]="firstName" required>
-                        @if (firstName.invalid && (firstName.dirty || firstName.touched)) {
-                            <mat-error *ngIf="firstName.errors!['required']">First Name is required</mat-error>
+                        @if (firstName.hasError('required')) {
+                            <mat-error data-first-name-error="">First Name is required</mat-error>
                         }
                     </mat-form-field>
-                    <mat-form-field>
+                    <mat-form-field aria-label="Enter last name">
                         <mat-label>Last Name</mat-label>
-                        <input type="email" matInput placeholder="Enter your last name" [formControl]="lastName" required>
-                        @if (lastName.invalid && (lastName.dirty || lastName.touched)) {
-                            <mat-error *ngIf="lastName.errors!['required']">Last Name is required</mat-error>
+                        <input type="text" matInput placeholder="Enter your last name" [formControl]="lastName" required>
+                        @if (lastName.hasError('required')) {
+                            <mat-error>Last Name is required</mat-error>
                         }
                     </mat-form-field>
-                    <mat-form-field>
+                    <mat-form-field aria-label="Enter date of birth">
                         <mat-label>Date of Birth</mat-label>
                         <input type="date" matInput placeholder="Enter your date of birth" [formControl]="birthDate" required>
-                        @if (birthDate.invalid && (birthDate.dirty || birthDate.touched)) {
+                        @if (birthDate.hasError('required')) {
                             <mat-error *ngIf="birthDate.errors!['required']">Date of Birth is required</mat-error>
                         }
                     </mat-form-field>
+                    <mat-radio-group aria-label="Select notification preference">
+                        <mat-radio-button value="1">Email Notifications</mat-radio-button>
+                        <mat-radio-button value="2">Browser Notifications</mat-radio-button>
+                    </mat-radio-group>
                 </div>
                 <div>
                     @if (isLoading) {
-                        <mat-spinner></mat-spinner>
+                    <mat-spinner data-spinner=""></mat-spinner>
                     } @else {
-                        <button type="submit" mat-flat-button color="primary">Next</button>
+                        <button
+                            aria-label="Navigate to next step"
+                            type="submit"
+                            mat-flat-button 
+                            color="primary"
+                            data-next-button="">
+                            Next
+                        </button>
                     }
 
                 </div>
@@ -58,7 +81,9 @@
         </mat-step>
         <mat-step label="Done!">
             <h2 class="account-created-title"> Account Created! </h2>
-            <a mat-button [routerLink]="['/login']">Click here to navigate back to login screen.</a>
+            <a aria-label="Go to login page button" mat-button [routerLink]="['/login']" data-navigate-login-button="">
+                Click here to navigate back to login screen.
+            </a>
         </mat-step>
     </mat-stepper>
 </section>

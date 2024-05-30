@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { MaterialComponentsModule } from '../../../../shared/modules/material-components.module';
 import { SnackbarService } from '../../../../shared/services/snack-bar/snackbar.service';
 import { Store } from '@ngrx/store';
+import { emailRegex } from '../../../../shared/constants/regex';
 
 @Component({
   selector: 'app-validate-email-form',
@@ -20,7 +21,10 @@ export class ValidateEmailFormComponent implements OnInit {
   @Output() emailValidated = new EventEmitter<boolean>();
   public formGroup: FormGroup;
   public isLoading: WritableSignal<boolean> = signal(false);
-  public validateEmailField: FormControl = new FormControl('', Validators.required);
+  public validateEmailField: FormControl = new FormControl('', [
+    Validators.required,
+    Validators.email,
+  ]);
 
   constructor(
     private store$: Store,

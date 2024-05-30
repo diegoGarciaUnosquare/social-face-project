@@ -4,6 +4,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatStepper, StepperOrientation } from '@angular/material/stepper';
 import { createUser, createUserFailure, createUserSuccess } from '../../reducers/user-store/user.actions';
+import { emailRegex, passwordRegex } from '../../../shared/constants/regex';
 import { map, take } from 'rxjs/operators';
 
 import { AppState } from '../../reducers/user-store/user.reducer';
@@ -24,10 +25,17 @@ import { Store } from '@ngrx/store';
 })
 export class CreateUserComponent implements OnInit {
   public stepperOrientation: Observable<StepperOrientation>;
-  public email: FormControl = new FormControl('', Validators.required);
+  public email: FormControl = new FormControl('', [
+    Validators.required,
+    Validators.email,
+  ]);
   public firstName: FormControl = new FormControl('', Validators.required);
   public lastName: FormControl = new FormControl('', Validators.required);
-  public password: FormControl = new FormControl('', Validators.required);
+  public password: FormControl = new FormControl('', [
+    Validators.required,
+    Validators.minLength(8),
+    Validators.pattern(passwordRegex)
+  ]);
   public username: FormControl = new FormControl('', Validators.required);
   public birthDate: FormControl = new FormControl('', Validators.required);
   public notificationPreference: FormControl = new FormControl(false);
