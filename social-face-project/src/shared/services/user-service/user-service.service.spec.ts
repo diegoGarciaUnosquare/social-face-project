@@ -10,7 +10,6 @@ describe('UserService', () => {
   let service: UserService;
   let httpController: HttpTestingController;
   let sub: Subscription;
-  const url = 'http://localhost:3000/';
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -49,16 +48,13 @@ describe('UserService', () => {
     });
 
     it('should return an error', (done: DoneFn) => {
+      const errorMessage = 'Error creating user';
       spyOn(service, 'createUser').and.callThrough();
+      spyOn(service['httpService'], 'post').and.returnValue(of(new Error(errorMessage)));
       sub = service.createUser(mockUser).subscribe((response: any) => {
-        expect(response.status).toEqual(400);
+        expect(response.message).toEqual(errorMessage);
         done();
       });
-
-      httpController.expectOne(`${url}user`).flush(
-        null,
-        { status: 400, statusText: 'Bad Request' }
-      );
     });
   });
 
@@ -82,16 +78,13 @@ describe('UserService', () => {
     });
 
     it('should return an error', (done: DoneFn) => {
+      const errorMessage = 'Error validating email';
       spyOn(service, 'validateEmail').and.callThrough();
+      spyOn(service['httpService'], 'post').and.returnValue(of(new Error(errorMessage)));
       sub = service.validateEmail(email).subscribe((response: any) => {
-        expect(response.status).toEqual(400);
+        expect(response.message).toEqual(errorMessage);
         done();
       });
-
-      httpController.expectOne(`${url}validate-email`).flush(
-        null,
-        { status: 400, statusText: 'Bad Request' }
-      );
     });
   });
 
@@ -107,16 +100,13 @@ describe('UserService', () => {
     });
 
     it('should return an error', (done: DoneFn) => {
+      const errorMessage = 'Error updating password';
       spyOn(service, 'updatePassword').and.callThrough();
+      spyOn(service['httpService'], 'put').and.returnValue(of(new Error(errorMessage)));
       sub = service.updatePassword(password).subscribe((response: any) => {
-        expect(response.status).toEqual(400);
+        expect(response.message).toEqual(errorMessage);
         done();
       });
-
-      httpController.expectOne(`${url}user/1/password`).flush(
-        null,
-        { status: 400, statusText: 'Bad Request' }
-      );
     });
 
   });

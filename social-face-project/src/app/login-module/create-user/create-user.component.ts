@@ -1,10 +1,9 @@
 import { Actions, ofType } from '@ngrx/effects';
 import { AsyncPipe, CommonModule } from '@angular/common';
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatStepper, StepperOrientation } from '@angular/material/stepper';
 import { createUser, createUserFailure, createUserSuccess } from '../../reducers/user-store/user.actions';
-import { emailRegex, passwordRegex } from '../../../shared/constants/regex';
 import { map, take } from 'rxjs/operators';
 
 import { AppState } from '../../reducers/user-store/user.reducer';
@@ -15,6 +14,7 @@ import { Observable } from 'rxjs';
 import { RouterModule } from '@angular/router';
 import { SnackbarService } from '../../../shared/services/snack-bar/snackbar.service';
 import { Store } from '@ngrx/store';
+import { passwordRegex } from '../../../shared/constants/regex';
 
 @Component({
   selector: 'app-create-user',
@@ -38,7 +38,7 @@ export class CreateUserComponent implements OnInit {
   ]);
   public username: FormControl = new FormControl('', Validators.required);
   public birthDate: FormControl = new FormControl('', Validators.required);
-  public notificationPreference: FormControl = new FormControl(false);
+  public notificationPreference: FormControl = new FormControl('1');
   public isLoading: boolean = false;
   @ViewChild('createUserStepper') createUserStepper: MatStepper | undefined;
 

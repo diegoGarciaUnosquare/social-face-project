@@ -20,7 +20,7 @@ main {
   height: 100vh;
   justify-content: center;
   width: 100vw;
-  background-color: #D0BCFF;
+  background-color: $core-background-color;
 }
 
 .mat-mdc-progress-spinner {

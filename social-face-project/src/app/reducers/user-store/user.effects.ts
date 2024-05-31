@@ -17,15 +17,15 @@ export class UserEffects {
         map(action => action.userData),
         switchMap((userData: IUser) => this.userService.createUser(userData).pipe(
             map((createdUser: IUser) => UserActions.createUserSuccess({ createdUser })),
+            catchError((errorData: Error) => {
+                const error: IError = {
+                    message: errorData.message,
+                    status: 500,
+                    url: 'http://localhost:3000/users',
+                };
+                return of(UserActions.createUserFailure({ error }));
+            })
         )),
-        catchError((errorData: any) => {
-            const error: IError = {
-                message: errorData.message,
-                status: 500,
-                url: 'http://localhost:3000/users',
-            };
-            return of(UserActions.createUserFailure({ error }));
-        })
     ));
 
     validateEmail$ = createEffect(() => this.actions$.pipe(
@@ -43,15 +43,15 @@ export class UserEffects {
                 };
                 return UserActions.validateEmailFailure({ error});
             }),
+            catchError((errorData: Error) => {
+                const error: IError = {
+                    message: errorData.message,
+                    status: 500,
+                    url: 'http://localhost:3000/validate-email',
+                };
+                return of(UserActions.validateEmailFailure({ error }));
+            })
         )),
-        catchError((errorData: any) => {
-            const error: IError = {
-                message: errorData.message,
-                status: 500,
-                url: 'http://localhost:3000/validate-email',
-            };
-            return of(UserActions.validateEmailFailure({ error }));
-        })
     ));
 
     updatePassword$ = createEffect(() => this.actions$.pipe(
@@ -59,14 +59,14 @@ export class UserEffects {
         map(action => action.password),
         switchMap((password: string) => this.userService.updatePassword(password).pipe(
             map(() => UserActions.updatePasswordSuccess()),
+            catchError((errorData: Error) => {
+                const error: IError = {
+                    message: errorData.message,
+                    status: 500,
+                    url: 'http://localhost:3000/user/1/password',
+                };
+                return of(UserActions.updatePasswordFailure({ error }));
+            })
         )),
-        catchError((errorData: any) => {
-            const error: IError = {
-                message: errorData.message,
-                status: 500,
-                url: 'http://localhost:3000/user/1/password',
-            };
-            return of(UserActions.updatePasswordFailure({ error }));
-        })
     ));
 }

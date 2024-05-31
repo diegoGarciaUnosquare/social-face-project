@@ -14,12 +14,27 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 20px;
     justify-content: space-around;
   }
 
   .account-created-title {
     color: white;
     margin-left: 9px;
+  }
+
+  @media screen and (max-width: 768px) {
+    .user-creation-stepper {
+      width: 90%;
+    }
+
+
+    .form-group-container {
+      gap: 20px;
+    }
+
+    .mat-mdc-form-field {
+      width: 80%;
+    }
   }
 }

@@ -1,6 +1,6 @@
+import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Observable, catchError, map, of, switchMap } from 'rxjs';
 
-import { HttpClient } from '@angular/common/http';
 import { IUser } from '../../interfaces/user.interface';
 import { Injectable } from '@angular/core';
 
@@ -13,11 +13,14 @@ export class UserService {
 
   public createUser(userData: IUser): Observable<IUser> {
     return this.httpService.post('http://localhost:3000/user', userData).pipe(
-      switchMap((response: any) => {
+      map((response: any) => {
         const createdUser: IUser = response;
-        return of(createdUser);
+        return createdUser;
       }),
-      catchError(error => of(error))
+      catchError((error: HttpErrorResponse) => {
+        throw new Error(error.message);
+      
+      })
     );
   }
 
@@ -26,16 +29,21 @@ export class UserService {
       email
     }).pipe(
       map((validEmail: any) => {
-        return validEmail.valid;
+        console.log(validEmail);
+        return validEmail;
       }),
-      catchError(error => of(error))
+      catchError((error: HttpErrorResponse) => {
+        throw new Error(error.message);
+      })
     );
   }
 
   public updatePassword(password: string): Observable<string> {
     return this.httpService.put('http://localhost:3000/user/1/password', { password }).pipe(
       map((updatedPassword: any) => updatedPassword),
-      catchError(error => of(error))
+      catchError((error: HttpErrorResponse) => {
+        throw new Error(error.message);
+      })
     );
   }
 }
