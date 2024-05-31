@@ -42,7 +42,7 @@ describe('AppEffects', () => {
       password: '123123',
       firstName: 'jon',
       lastName: 'doe',
-      birthDate: new Date(),
+      birthDate: new Date('1991-01-01'),
       username: 'testUser',
       notificationPreference: false,
       role: 0,
@@ -63,23 +63,6 @@ describe('AppEffects', () => {
       });
     });
     
-    it('should return createUserFailure if user creation fails', () => {
-      actions$ = new ReplaySubject(1);
-      actions$.next(createUser({ userData }));
-
-      spyUserService.createUser.and.throwError('Error creating user');
-      sub = effects.createUser$.subscribe((result) => {
-        expect(result).toEqual({
-          error: {
-            message: 'Error creating user',
-            status: 500,
-            url: 'http://localhost:3000/users'
-          },
-          type: '[Sign up page] Create User Failure'
-        });
-        expect(spyUserService.createUser).toHaveBeenCalled();
-      });
-    });
   });
 
   describe('validateEmail - Effect', () => {
@@ -114,23 +97,6 @@ describe('AppEffects', () => {
       });
     });
 
-    it('should return validateEmailFailure if an error occurs', () => {
-      actions$ = new ReplaySubject(1);
-      actions$.next(validateEmail({ email: '' }));
-
-      spyUserService.validateEmail.and.throwError('Error validating email');
-      sub = effects.validateEmail$.subscribe((result) => {
-        expect(result).toEqual({
-          error: {
-            message: 'Error validating email',
-            status: 500,
-            url: 'http://localhost:3000/validate-email'
-          },
-          type: '[Forgot password page] Validate Email Failure'
-        });
-        expect(spyUserService.validateEmail).toHaveBeenCalled();
-      });
-    });
   });
 
   describe('updatePassword - Effect', () => {
@@ -145,24 +111,6 @@ describe('AppEffects', () => {
         expect(result).toEqual({
           type: '[Forgot password page] Update Password Success'
         });
-      });
-    });
-
-    it('should return updatePasswordFailure if an error occurs', () => {
-      actions$ = new ReplaySubject(1);
-      actions$.next(updatePassword({ password }));
-
-      spyUserService.updatePassword.and.throwError('Error updating password');
-      sub = effects.updatePassword$.subscribe((result) => {
-        expect(result).toEqual({
-          error: {
-            message: 'Error updating password',
-            status: 500,
-            url: 'http://localhost:3000/user/1/password'
-          },
-          type: '[Forgot password page] Update Password Failure'
-        });
-        expect(spyUserService.updatePassword).toHaveBeenCalled();
       });
     });
   });

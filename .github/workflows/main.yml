@@ -34,6 +34,19 @@ jobs:
         run: |
           cd ./social-face-project
           npm run build
+
+      - name: Run Cypress Tests
+        uses: cypress-io/github-action@v6
+        run: |
+          cd ./social-face-project
+        with:
+          start: npm start
+          wait-on: 'http://localhost:3000'
+          record: true
+          parallel: true 
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
