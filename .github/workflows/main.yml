@@ -21,18 +21,18 @@ jobs:
           node-version: '21.x'
 
       - name: Install dependencies
-        run: |
-          cd ./social-face-project
-          npm ci
+        working-directory: ./social-face-project
+        run: npm ci
 
       - name: Run unit tests
-        run: |
-          cd ./social-face-project
-          npm test -- --no-watch --no-progress --browsers=ChromeHeadless
+        working-directory: ./social-face-project
+        run: npm test -- --no-watch --no-progress --browsers=ChromeHeadless
 
       - name: Run Cypress Tests
         uses: cypress-io/github-action@v6
+        working-directory: ./social-face-project/
         with:
+          config-file: ./social-face-project/cypress.config.ts
           project: ./social-face-project
           record: true
         env:
