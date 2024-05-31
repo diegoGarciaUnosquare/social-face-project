@@ -29,15 +29,8 @@ jobs:
         run: npm test -- --no-watch --no-progress --browsers=ChromeHeadless
 
       - name: Run Cypress Tests
-        uses: cypress-io/github-action@v6
-        with:
-          config-file: ./social-face-project/cypress.config.ts
-          project: ./social-face-project
-          record: true
-        env:
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_KEY }}
-          CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        working-directory: ./social-face-project
+        run: npx cypress run --config-file cypress.config.js --record --key ${{ secrets.CYPRESS_KEY }} --browser chrome --headless --parallel
       
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
