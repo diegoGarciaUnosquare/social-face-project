@@ -35,6 +35,10 @@ jobs:
           cd ./social-face-project
           npm run build
 
+      - name: move to project folder
+        run: |
+          cd ./social-face-project
+
       - name: Run Cypress Tests
         uses: cypress-io/github-action@v6
         with:
