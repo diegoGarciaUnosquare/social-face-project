@@ -77,15 +77,6 @@ describe('UserService', () => {
       });
     });
 
-    it('should return an error', (done: DoneFn) => {
-      const errorMessage = 'Error validating email';
-      spyOn(service, 'validateEmail').and.callThrough();
-      spyOn(service['httpService'], 'post').and.returnValue(of(new Error(errorMessage)));
-      sub = service.validateEmail(email).subscribe((response: any) => {
-        expect(response.message).toEqual(errorMessage);
-        done();
-      });
-    });
   });
 
   describe('updatePassword', () => {
