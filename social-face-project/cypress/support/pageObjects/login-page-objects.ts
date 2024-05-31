@@ -9,7 +9,7 @@ export class LoginPageObjects {
     }
 
     public clickCreateAccountButton(): void {
-        cy.get(this.loginPageContainer).find(this.createAccountButton).then((button) => {
+        cy.get(this.loginPageContainer).find(this.createAccountButton).then((button: JQuery<HTMLElement>) => {
             cy.wrap(button).should('be.visible');
             cy.wrap(button).click();
         });
