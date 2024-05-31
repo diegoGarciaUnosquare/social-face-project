@@ -30,7 +30,6 @@ jobs:
 
       - name: Run Cypress Tests
         uses: cypress-io/github-action@v6
-        working-directory: ./social-face-project/
         with:
           config-file: ./social-face-project/cypress.config.ts
           project: ./social-face-project
