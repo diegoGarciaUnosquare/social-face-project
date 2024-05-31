@@ -5,11 +5,12 @@ const createEsbuildPlugin = require("@badeball/cypress-cucumber-preprocessor/esb
 
 
 export default defineConfig({
+  projectId: "p5pkm3",
+  viewportWidth: 1400,
+  viewportHeight: 1400,
   e2e: {
-    specPattern: "**/*.feature",
-    viewportWidth: 1400,
-    viewportHeight: 1400,
     baseUrl: "https://diegogarciaunosquare.github.io/social-face-project/",
+    specPattern: "**/*.feature",
     async setupNodeEvents(
       on: Cypress.PluginEvents,
       config: Cypress.PluginConfigOptions

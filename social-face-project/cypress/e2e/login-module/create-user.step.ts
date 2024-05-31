@@ -10,7 +10,7 @@ Given("the user is on the login screen", () => {
     loginPageObjects.userIsOnTheLoginScreen();
 });
 
-When("the user clicks on the create account button", () => {
+When("the user taps on the create account button", () => {
     loginPageObjects.clickCreateAccountButton();
 });
 
