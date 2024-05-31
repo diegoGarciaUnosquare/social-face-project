@@ -30,7 +30,7 @@ jobs:
 
       - name: Run Cypress Tests
         working-directory: ./social-face-project
-        run: npx cypress run --config-file cypress.config.js --record --key ${{ secrets.CYPRESS_KEY }} --browser chrome --headless --parallel
+        run: npx cypress run --config-file cypress.config.ts --record --key ${{ secrets.CYPRESS_KEY }} --browser chrome --headless --parallel
       
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
