@@ -1,14 +1,26 @@
+import { AppState, userState } from '../../../reducers/user-store/user.reducer';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { ReplaySubject } from 'rxjs';
 import { UpdatePasswordFormComponent } from './update-password-form.component';
+import { provideMockActions } from '@ngrx/effects/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 
-describe('UpdatePasswordFormComponent', () => {
+fdescribe('UpdatePasswordFormComponent', () => {
   let component: UpdatePasswordFormComponent;
+  let actions$: ReplaySubject<any>;
   let fixture: ComponentFixture<UpdatePasswordFormComponent>;
+  const initialState = userState;
+
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [UpdatePasswordFormComponent]
+      imports: [UpdatePasswordFormComponent, NoopAnimationsModule],
+      providers: [
+        provideMockStore<AppState>({ initialState }),
+        provideMockActions(() => actions$),
+      ]
     })
     .compileComponents();
     
