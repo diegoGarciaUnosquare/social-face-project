@@ -7,7 +7,7 @@ import { UpdatePasswordFormComponent } from './update-password-form.component';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 
-fdescribe('UpdatePasswordFormComponent', () => {
+describe('UpdatePasswordFormComponent', () => {
   let component: UpdatePasswordFormComponent;
   let actions$: ReplaySubject<any>;
   let fixture: ComponentFixture<UpdatePasswordFormComponent>;
