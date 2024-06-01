@@ -8,6 +8,7 @@ import { map, take } from 'rxjs/operators';
 
 import { AppState } from '../../reducers/user-store/user.reducer';
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { IError } from '../../../shared/interfaces/error.interface';
 import { IUser } from '../../../shared/interfaces/user.interface';
 import { MaterialComponentsModule } from '../../../shared/modules/material-components.module';
 import { Observable } from 'rxjs';
@@ -88,11 +89,9 @@ export class CreateUserComponent implements OnInit {
     return this.actions$.pipe(
       ofType(createUserFailure),
       take(1),
-      map((userCreationError: any) => {
-        if (userCreationError) {
-          const { error } = userCreationError;
-          this.snackbarService.openSnackBar(error.message);
-        }
+      map((userCreationError: { error: IError, type: string}) => {
+        const { error } = userCreationError;
+        this.snackbarService.openSnackBar(error.message);
       })
     );
   }

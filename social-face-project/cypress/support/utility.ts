@@ -4,7 +4,7 @@ export class Utility {
     public generateUser(): IUser {
         return {
             email: 'test@test.com',
-            password: 'aB2!_123',
+            password: 'a9yhd7s1',
             firstName: 'jon',
             lastName: 'doe',
             birthDate: new Date('1991-01-01'),

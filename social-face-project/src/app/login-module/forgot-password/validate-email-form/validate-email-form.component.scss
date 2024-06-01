@@ -1,0 +1,7 @@
+@import "../../../../styles/mixins";
+
+.validate-email-form-container {
+    .validate-email-btn {
+        @include button-large;
+    }
+}

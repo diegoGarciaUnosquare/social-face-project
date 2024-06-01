@@ -14,7 +14,7 @@ export class CreateUserPageObject {
     firstNameErrorField = '[data-first-name-error-field]';
     lastNameInputField = '[data-last-name-field]';
     lastNameErrorField = '[data-last-name-error-field]';
-    dateOfBirthInputField = '[data-date-of-birth-field]';
+    dateOfBirthInputField = '[data-birth-date-field]';
     emailNotificationInputField = '[data-notification-email-field]';
     browserNotificationInputField = '[data-notification-browser-field]';
     loadingSpinner = '[data-spinner]';
@@ -29,9 +29,9 @@ export class CreateUserPageObject {
             cy.wrap(form).find(this.usernameInputField).type(user.username);
             cy.wrap(form).find(this.passwordInputField).type(user.password);
             cy.wrap(form).find(this.emailInputField).type(user.email);
-            cy.wrap(form).find(this.firstNameInputField).type(user.firstName);
-            cy.wrap(form).find(this.lastNameInputField).type(user.lastName);
-            cy.wrap(form).find(this.dateOfBirthInputField).type(user.birthDate.toISOString());
+            cy.wrap(form).find(this.firstNameInputField).type(user.firstName, { force: true });
+            cy.wrap(form).find(this.lastNameInputField).type(user.lastName, { force: true });
+            cy.wrap(form).find(this.dateOfBirthInputField).type('2023-01-07');
             cy.wrap(form).find(this.emailNotificationInputField).click();
         });
     }

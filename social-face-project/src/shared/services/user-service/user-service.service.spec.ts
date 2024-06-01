@@ -93,7 +93,7 @@ describe('UserService', () => {
     it('should return an error', (done: DoneFn) => {
       const errorMessage = 'Error updating password';
       spyOn(service, 'updatePassword').and.callThrough();
-      spyOn(service['httpService'], 'put').and.returnValue(of(new Error(errorMessage)));
+      spyOn(service['httpService'], 'post').and.returnValue(of(new Error(errorMessage)));
       sub = service.updatePassword(password).subscribe((response: any) => {
         expect(response.message).toEqual(errorMessage);
         done();

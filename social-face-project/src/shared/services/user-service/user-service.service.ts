@@ -8,29 +8,28 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class UserService {
+  private url: string = 'https://my-json-server.typicode.com/diegoGarciaUnosquare/social-face-project-mock-server/';
 
   constructor(private httpService: HttpClient) { }
 
   public createUser(userData: IUser): Observable<IUser> {
-    return this.httpService.post('http://localhost:3000/user', userData).pipe(
+    return this.httpService.post(`${this.url}create-user`, userData).pipe(
       map((response: any) => {
         const createdUser: IUser = response;
         return createdUser;
       }),
       catchError((error: HttpErrorResponse) => {
         throw new Error(error.message);
-      
       })
     );
   }
 
   public validateEmail(email: string): Observable<boolean> {
-    return this.httpService.post(`http://localhost:3000/validate-email`, {
+    return this.httpService.post(`${this.url}validate-email`, {
       email
     }).pipe(
       map((validEmail: any) => {
-        console.log(validEmail);
-        return validEmail;
+        return validEmail ? true : false;
       }),
       catchError((error: HttpErrorResponse) => {
         throw new Error(error.message);
@@ -39,7 +38,7 @@ export class UserService {
   }
 
   public updatePassword(password: string): Observable<string> {
-    return this.httpService.put('http://localhost:3000/user/1/password', { password }).pipe(
+    return this.httpService.post(`${this.url}update-password`, { password }).pipe(
       map((updatedPassword: any) => updatedPassword),
       catchError((error: HttpErrorResponse) => {
         throw new Error(error.message);

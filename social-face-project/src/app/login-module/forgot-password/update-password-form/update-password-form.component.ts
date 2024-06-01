@@ -1,14 +1,17 @@
-import { Component, WritableSignal, signal } from '@angular/core';
+import { Actions, ofType } from '@ngrx/effects';
+import { Component, OnInit, WritableSignal, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Observable, map } from 'rxjs';
+import { updatePassword, updatePasswordFailure, updatePasswordSuccess } from '../../../reducers/user-store/user.actions';
 
-import { Actions } from '@ngrx/effects';
 import { AppState } from '../../../reducers/user-store/user.reducer';
 import { CommonModule } from '@angular/common';
+import { IError } from '../../../../shared/interfaces/error.interface';
 import { MaterialComponentsModule } from '../../../../shared/modules/material-components.module';
+import { Router } from '@angular/router';
 import { SnackbarService } from '../../../../shared/services/snack-bar/snackbar.service';
 import { Store } from '@ngrx/store';
 import { passwordRegex } from '../../../../shared/constants/regex';
-import { updatePassword } from '../../../reducers/user-store/user.actions';
 
 @Component({
   selector: 'app-update-password-form',
@@ -17,7 +20,7 @@ import { updatePassword } from '../../../reducers/user-store/user.actions';
   templateUrl: './update-password-form.component.html',
   styleUrl: './update-password-form.component.scss'
 })
-export class UpdatePasswordFormComponent {
+export class UpdatePasswordFormComponent implements OnInit {
   public newPassword: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(8),
@@ -31,11 +34,17 @@ export class UpdatePasswordFormComponent {
 
   constructor(private store: Store<AppState>,
     private actions$: Actions,
+    private router: Router,
     private snackbarService: SnackbarService) {
     this.formGroup = new FormGroup({
       newPassword: this.newPassword,
       confirmPassword: this.confirmPassword,
     });
+  }
+
+  ngOnInit(): void {
+    this.handleUpdatePasswordSuccess().subscribe();
+    this.handleUpdatePasswordFailure().subscribe();
   }
 
   public get passwordMatches(): boolean {
@@ -47,5 +56,33 @@ export class UpdatePasswordFormComponent {
       this.isLoading.update(() => true);
       this.store.dispatch(updatePassword({ password: this.newPassword.value }));
     }
+  }
+
+  private handleUpdatePasswordSuccess(): Observable<void> { 
+    return this.actions$.pipe(
+      ofType(updatePasswordSuccess),
+      map(() => {
+        this.isLoading.update(() => false);
+        this.snackbarService.openSnackBar('Password updated successfully. You will be redirected to login screen.');
+        this.navigateToLogin();
+      })
+    );
+  }
+
+  private handleUpdatePasswordFailure(): Observable<void> {
+    return this.actions$.pipe(
+      ofType(updatePasswordFailure),
+      map((updatePasswordError: { error: IError, type: string}) => {
+        this.isLoading.update(() => false);
+        const { error } = updatePasswordError;
+        this.snackbarService.openSnackBar(error.message);
+      })
+    );
+  }
+
+  private navigateToLogin(): void {
+    setTimeout(() => {
+      this.router.navigate(['login']);
+    }, 2000);
   }
 }

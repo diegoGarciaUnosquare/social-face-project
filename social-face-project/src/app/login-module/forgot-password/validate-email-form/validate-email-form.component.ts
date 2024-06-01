@@ -5,6 +5,7 @@ import { Observable, map } from 'rxjs';
 import { validateEmail, validateEmailFailure, validateEmailSuccess } from '../../../reducers/user-store/user.actions';
 
 import { CommonModule } from '@angular/common';
+import { IError } from '../../../../shared/interfaces/error.interface';
 import { MaterialComponentsModule } from '../../../../shared/modules/material-components.module';
 import { SnackbarService } from '../../../../shared/services/snack-bar/snackbar.service';
 import { Store } from '@ngrx/store';
@@ -61,12 +62,10 @@ export class ValidateEmailFormComponent implements OnInit {
   public handleValidateEmailError(): Observable<void> {
     return this.actions$.pipe(
       ofType(validateEmailFailure),
-      map((validateEmailError: any) => {
+      map((validateEmailError: { error: IError, type: string}) => {
         this.isLoading.update(() => false);
-        if(validateEmailError) {
-          const { error } = validateEmailError;
-          this.snackService.openSnackBar(error.message);
-        }
+        const { error } = validateEmailError;
+        this.snackService.openSnackBar(error.message);
       })
     );
   }
