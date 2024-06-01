@@ -8,8 +8,7 @@
                 <input matInput placeholder="Enter your email" [formControl]="validateEmailField" data-validate-email-field="">
                 @if (validateEmailField.hasError('required')) {
                     <mat-error data-validate-email-error-field="">Email is required</mat-error>
-                }
-                @if (validateEmailField.hasError('pattern')) {
+                } @else if (validateEmailField.hasError('pattern')) {
                     <mat-error data-validate-email-error-field="">Email is invalid</mat-error>
                 }
             </mat-form-field>

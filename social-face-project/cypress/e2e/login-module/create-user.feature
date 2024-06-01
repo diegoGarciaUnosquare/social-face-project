@@ -17,4 +17,4 @@ Feature: Create User
         Then the user is taken account creation success screen
         When the user taps the navigate to login screen button
         Then the user should be taken to the login screen
-        
+

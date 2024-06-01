@@ -48,6 +48,9 @@ export class UpdatePasswordFormComponent implements OnInit {
   }
 
   public get passwordMatches(): boolean {
+    if (this.newPassword.value === '' || this.confirmPassword.value === '') {
+      return false;
+    }
     return this.newPassword.value === this.confirmPassword.value;
   }
 

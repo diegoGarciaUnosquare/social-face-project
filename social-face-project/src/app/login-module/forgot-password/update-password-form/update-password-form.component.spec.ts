@@ -66,6 +66,12 @@ describe('UpdatePasswordFormComponent', () => {
       expect(component.passwordMatches).toBeTrue();
     });
 
+    it('should return false if newPassword is empty', () => {
+      component.newPassword.setValue('');
+      component.confirmPassword.setValue('password');
+      expect(component.passwordMatches).toBeFalse();
+    });
+
     it('should return false if newPassword does not match confirmPassword', () => {
       component.newPassword.setValue('password');
       component.confirmPassword.setValue('password1');
