@@ -12,4 +12,12 @@ Feature: Forgot Password feature
         When the user enters an email address
         And the user clicks on the submit button
         Then the user should navigate to the update password screen
-       
+
+    Scenario: User enters new password
+        Given the user is on the forgot password screen
+        When the user enters an email address
+        And the user clicks on the submit button
+        Then the user should navigate to the update password screen
+        When the user enters a new password
+        And the user clicks on the update password button
+        Then the user should navigate to the login screen

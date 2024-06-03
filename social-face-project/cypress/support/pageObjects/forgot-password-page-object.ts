@@ -38,4 +38,18 @@ export class ForgotPasswordPageObject {
             cy.wrap(form).find(this.validateEmailButton).click();
         });
     }
+
+    public enterNewPassword(): void {
+        cy.get(this.forgotPasswordContainer).find(this.updatePasswordForm).then((form: JQuery<HTMLElement>) => {
+            cy.wrap(form).find(this.newPasswordInputField).type('a9yhd7s1', { force: true });
+            cy.wrap(form).find(this.confirmPasswordInputField).type('a9yhd7s1', { force: true });
+        });
+    }
+
+    public clickUpdatePasswordButton(): void {
+        cy.get(this.updatePasswordForm).find(this.updatePasswordButton).then((button: JQuery<HTMLElement>) => {
+            cy.wrap(button).should('be.enabled');
+            cy.wrap(button).click();
+        });
+    }
 }

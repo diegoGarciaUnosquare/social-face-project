@@ -1,4 +1,5 @@
 import { AppComponent } from './app.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
@@ -26,6 +27,7 @@ export const routes: Routes = [
                 pathMatch: 'full',
                 loadComponent: () => import('./login-module/forgot-password/forgot-password.component').then(c => c.ForgotPasswordComponent),
             }
-        ]
+        ],
     },
+    { path: '**', component: PageNotFoundComponent },
 ];
