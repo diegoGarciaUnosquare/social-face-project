@@ -22,10 +22,9 @@ export const userReducer = createReducer(
             ...state,
         };
     }),
-    on(UserActions.createUserSuccess, (state, { createdUser }) => {
+    on(UserActions.createUserSuccess, (state) => {
         return {
             ...state,
-            user: createdUser,
         };
     }),
     on(UserActions.createUserFailure, (state, { error }) => {
@@ -45,6 +44,19 @@ export const userReducer = createReducer(
     on(UserActions.updatePassword, (state) => { return { ...state }; }),
     on(UserActions.updatePasswordSuccess, (state) => { return { ...state }; }),
     on(UserActions.updatePasswordFailure, (state, { error }) => {
+        return {
+            ...state,
+            error,
+        };
+    }),
+    on(UserActions.loginUser, (state) => { return { ...state }; }),
+    on(UserActions.loginUserSuccess, (state, { user }) => {
+        return {
+            ...state,
+            user,
+        };
+    }),
+    on(UserActions.loginUserFailure, (state, { error }) => {
         return {
             ...state,
             error,

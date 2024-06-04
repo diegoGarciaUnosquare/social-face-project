@@ -56,7 +56,6 @@ describe('AppEffects', () => {
 
       sub = effects.createUser$.subscribe((result) => {
         expect(result).toEqual({
-          createdUser: userData,
           type: '[Sign up page] Create User Success'
         });
         expect(spyUserService.createUser).toHaveBeenCalled();
@@ -99,7 +98,7 @@ describe('AppEffects', () => {
 
   });
 
-  describe('updatePassword - Effect', () => {
+deja   describe('updatePassword - Effect', () => {
     const password = 'test9323r9';
 
     it('should return updatePasswordSuccess action and call updatePassword', () => {

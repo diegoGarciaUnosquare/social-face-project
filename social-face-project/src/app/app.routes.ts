@@ -1,6 +1,7 @@
 import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { Routes } from '@angular/router';
+import { authUserGuard } from '../shared/guards/auth-user.guard';
 
 export const routes: Routes = [
     {
@@ -28,6 +29,11 @@ export const routes: Routes = [
                 loadComponent: () => import('./login-module/forgot-password/forgot-password.component').then(c => c.ForgotPasswordComponent),
             }
         ],
+    },
+    {
+        path: 'feed',
+        canActivate: [authUserGuard],
+        loadComponent: () => import('./feed/feed.component').then(c => c.FeedComponent),
     },
     { path: '**', component: PageNotFoundComponent },
 ];

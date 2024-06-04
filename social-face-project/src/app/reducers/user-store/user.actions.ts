@@ -9,7 +9,6 @@ export const createUser = createAction(
 );
 export const createUserSuccess = createAction(
   '[Sign up page] Create User Success',
-  props<{ createdUser: IUser }>()
 );
 export const createUserFailure = createAction(
   '[Sign up page] Create User Failure',
@@ -37,5 +36,20 @@ export const updatePasswordSuccess = createAction(
 );
 export const updatePasswordFailure = createAction(
   '[Forgot password page] Update Password Failure',
+  props<{ error: IError }>()
+);
+
+export const loginUser = createAction(
+  '[Login page] Login Users',
+  props<{ username: string, password: string }>()
+);
+
+export const loginUserSuccess = createAction(
+  '[Login page] Login Users Success',
+  props<{ user: IUser }>()
+);
+
+export const loginUserFailure = createAction(
+  '[Login page] Login Users Failure',
   props<{ error: IError }>()
 );

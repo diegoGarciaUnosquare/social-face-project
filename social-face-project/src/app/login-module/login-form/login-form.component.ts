@@ -1,9 +1,17 @@
-import { Component, signal } from '@angular/core';
+import { Actions, ofType } from '@ngrx/effects';
+import { Component, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Observable, map } from 'rxjs';
+import { Router, RouterModule } from '@angular/router';
+import { loginUser, loginUserFailure, loginUserSuccess } from '../../reducers/user-store/user.actions';
 
+import { AppState } from '../../reducers/user-store/user.reducer';
 import { CommonModule } from '@angular/common';
+import { IError } from '../../../shared/interfaces/error.interface';
 import { MaterialComponentsModule } from '../../../shared/modules/material-components.module';
-import { RouterModule } from '@angular/router';
+import { SnackbarService } from '../../../shared/services/snack-bar/snackbar.service';
+import { Store } from '@ngrx/store';
+import { passwordRegex } from '../../../shared/constants/regex';
 
 @Component({
   selector: 'app-login-form',
@@ -13,8 +21,11 @@ import { RouterModule } from '@angular/router';
   styleUrl: './login-form.component.scss'
 })
 
-export class LoginFormComponent {
-  public password: FormControl = new FormControl('', Validators.required);
+export class LoginFormComponent implements OnInit {
+  public password: FormControl = new FormControl('', [
+    Validators.required,
+    Validators.pattern(passwordRegex),
+  ]);
   public username: FormControl = new FormControl('', Validators.required);
   public formGroup: FormGroup = new FormGroup({
     password: this.password,
@@ -22,9 +33,60 @@ export class LoginFormComponent {
   });
   public isLoading = signal(false);
 
+  constructor(
+    private actions$: Actions,
+    private store: Store<AppState>,
+    private snackbarService: SnackbarService,
+    private router: Router
+  ) { }
+
+  ngOnInit(): void {
+    this.handleLoginError().subscribe();
+    this.handleLoginSuccess().subscribe();
+  }
+
+  /**
+   * On Submit
+   * Description: This method is called when the form is submitted. It validates the form and dispatches the loginUser action
+   * @returns void
+   */
   public onSubmit(): void {
     if (this.formGroup.valid) {
       this.isLoading.update(() => true);
+      this.store.dispatch(loginUser({
+        username: this.username.value,
+        password: this.password.value
+      }));
     }
+  }
+
+  /**
+   * Handle Login Error
+   * Description: This method handles the login error and displays a snackbar with the error message
+   * @returns Observable<void>
+   */
+  private handleLoginError(): Observable<void> {
+    return this.actions$.pipe(
+      ofType(loginUserFailure),
+      map((loginFailure: { error: IError, type: string }) => {
+        this.isLoading.update(() => false);
+        this.snackbarService.openSnackBar(loginFailure.error.message);
+      })
+    );
+  }
+
+  /**
+   * Handle Login Success
+   * Description: This method handles the login success and navigates to the feed page
+   * @returns Observable<void>
+   */
+  private handleLoginSuccess(): Observable<void> {
+    return this.actions$.pipe(
+      ofType(loginUserSuccess),
+      map(() => {
+        this.isLoading.update(() => false);
+        this.router.navigate(['/feed']);
+      })
+    );
   }
 }

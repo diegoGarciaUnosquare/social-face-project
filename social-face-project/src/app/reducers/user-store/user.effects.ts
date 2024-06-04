@@ -16,7 +16,7 @@ export class UserEffects {
         ofType(UserActions.createUser),
         map(action => action.userData),
         switchMap((userData: IUser) => this.userService.createUser(userData).pipe(
-            map((createdUser: IUser) => UserActions.createUserSuccess({ createdUser })),
+            map(() => UserActions.createUserSuccess()),
             catchError((errorData: Error) => {
                 const error: IError = {
                     message: errorData.message,
@@ -66,6 +66,22 @@ export class UserEffects {
                     url: 'http://localhost:3000/user/1/password',
                 };
                 return of(UserActions.updatePasswordFailure({ error }));
+            })
+        )),
+    ));
+
+    loginUser$ = createEffect(() => this.actions$.pipe(
+        ofType(UserActions.loginUser),
+        map(action => action),
+        switchMap(({ username, password }) => this.userService.login(username, password).pipe(
+            map((user: IUser) => UserActions.loginUserSuccess({ user })),
+            catchError((errorData: Error) => {
+                const error: IError = {
+                    message: errorData.message,
+                    status: 500,
+                    url: 'http://localhost:3000/login',
+                };
+                return of(UserActions.loginUserFailure({ error }));
             })
         )),
     ));

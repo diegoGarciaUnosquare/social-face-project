@@ -32,3 +32,6 @@ CI/CD is being handle with GitHub Actions. The pipeline is triggered when a push
  And you can find the deployed application in the link: [SocialFace](https://diegogarciaunosquare.github.io/social-face-project/)
 
  CI/CD pipeline runs: [runs](https://github.com/diegoGarciaUnosquare/social-face-project/actions/workflows/main.yml)
+
+ ## Design
+The UI Design for this app, has been made with Figma. You can find the design in the following link: [Figma Design](https://www.figma.com/design/tp9ugpTxLEOVx32KXj4FOx/social-face-project?node-id=11-1833&t=DnOaM1fxUYRI0QUv-0)
