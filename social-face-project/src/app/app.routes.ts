@@ -34,6 +34,18 @@ export const routes: Routes = [
         path: 'feed',
         canActivate: [authUserGuard],
         loadComponent: () => import('./feed/feed.component').then(c => c.FeedComponent),
+        loadChildren: () => [
+            {
+                path: '',
+                pathMatch: 'full',
+                redirectTo: 'posts',
+            },
+            {
+                path: 'posts',
+                pathMatch: 'full',
+                loadComponent: () => import('./feed/posts/posts.component').then(c => c.PostsComponent),
+            }
+        ]
     },
     { path: '**', component: PageNotFoundComponent },
 ];

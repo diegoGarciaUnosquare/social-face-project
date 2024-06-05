@@ -1,0 +1,18 @@
+<section aria-label="Posts List">
+    <p>hi</p>
+    @for(post of postList(); track post.id; let idx = $index) {
+        @if(idx > 0 && idx % 4 === 0) {
+            <p>here comes an ad</p>
+        } @else {
+            <article aria-label="Post">
+                <div>
+                    <p aria-label="Post Content">{{ post.content }}</p>
+                </div>
+                <footer>
+                    <button aria-label="Like Post">Like</button>
+                    <button aria-label="Comment Post">Comment</button>
+                </footer>
+            </article>
+        }
+    }
+</section>

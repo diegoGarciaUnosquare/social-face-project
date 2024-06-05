@@ -13,8 +13,6 @@ export const authUserGuard: CanActivateFn = () => {
   return store.select(getUser).pipe(
     take(1),
     map((user: IUser | null) => {
-      console.log('guard');
-      console.log(user);
       if (user && user.token !== '') {
         return true;
       } else {

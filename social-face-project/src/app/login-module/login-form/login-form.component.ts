@@ -1,5 +1,5 @@
 import { Actions, ofType } from '@ngrx/effects';
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, WritableSignal, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Observable, map } from 'rxjs';
 import { Router, RouterModule } from '@angular/router';
@@ -31,7 +31,8 @@ export class LoginFormComponent implements OnInit {
     password: this.password,
     username: this.username
   });
-  public isLoading = signal(false);
+  public isLoading: WritableSignal<boolean> = signal(false);
+  public hidePassword: WritableSignal<boolean> = signal(true);
 
   constructor(
     private actions$: Actions,
@@ -61,6 +62,17 @@ export class LoginFormComponent implements OnInit {
   }
 
   /**
+   * On Show Password
+   * Description: This method is called when the show password icon is clicked. It toggles the visibility of the password
+   * @param event: MouseEvent
+   * @returns void
+   */
+  public onShowPassword(event: MouseEvent): void {
+    this.hidePassword.update((value) => !value);
+    event.stopPropagation();
+  }
+
+  /**
    * Handle Login Error
    * Description: This method handles the login error and displays a snackbar with the error message
    * @returns Observable<void>
@@ -85,7 +97,7 @@ export class LoginFormComponent implements OnInit {
       ofType(loginUserSuccess),
       map(() => {
         this.isLoading.update(() => false);
-        this.router.navigate(['/feed']);
+        this.router.navigate(['/feed/posts']);
       })
     );
   }

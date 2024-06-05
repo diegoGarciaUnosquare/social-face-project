@@ -1,52 +1,52 @@
 <div class="container" data-login-page-container="">
-    <div>
+    <div class="logo-container">
         <img src="../../assets/social_face_logo.svg" alt="social_face_logo">
     </div>
     <div>
-        <div>
-            <div>
-                <h1 class="title" aria-label="Social Face Login Page">Social Face</h1>
-                <form [formGroup]="formGroup" class="form" (ngSubmit)="onSubmit()">
-                    @if (isLoading()) {
-                        <mat-spinner data-spinner=""></mat-spinner>
-                    } @else {
-                        <div class="form-group">
-                            <mat-form-field>
-                                <mat-label aria-label="Username field">Username</mat-label>
-                                <input matInput aria-placeholder="Enter your username" aria-required="true"
-                                    placeholder="Enter your username" id="usernameField" [formControl]="username"
-                                    data-username-field="">
-                                @if (username.hasError('required')) {
-                                <mat-error aria-errormessage="usernameField">Username is required</mat-error>
-                                }
-                            </mat-form-field>
-                        </div>
-                        <div class="form-group">
-                            <mat-form-field>
-                                <mat-label aria-label="Password label">Password</mat-label>
-                                <input type="password" matInput aria-placeholder="Enter your password" aria-required="true"
-                                    placeholder="Enter your password" [formControl]="password"
-                                    id="passwordField" data-password-field="">
-                                @if (password.hasError('required')) {
-                                    <mat-error aria-errormessage="passwordField">Password is required</mat-error>
-                                }
-                            </mat-form-field>
-                        </div>
-                        <a mat-button aria-label="Forgot password button" color="primary"
-                            [routerLink]="['/forgot-password']" data-forgot-password-btn="">
-                            Forgot Password?
-                        </a>
-                        <a mat-button aria-label="Create Account button" color="primary" [routerLink]="['/register-user']"
-                            data-create-account-btn="">
-                            Create Account
-                        </a>
-                        <button aria-label="Login button" mat-flat-button color="primary" [disabled]="!formGroup.valid"
-                            type="submit" data-login-btn="">
-                            Login
+        <h1 class="title" aria-label="Social Face Login Page">Social Face</h1>
+        <form [formGroup]="formGroup" class="form" (ngSubmit)="onSubmit()">
+            @if (isLoading()) {
+                <mat-spinner data-spinner=""></mat-spinner>
+            } @else {
+                <div class="form-group">
+                    <mat-form-field>
+                        <mat-label aria-label="Username field">Username</mat-label>
+                        <input matInput aria-placeholder="Enter your username" aria-required="true"
+                            placeholder="Enter your username" id="usernameField" [formControl]="username"
+                            data-username-field="">
+                        @if (username.hasError('required')) {
+                        <mat-error aria-errormessage="usernameField">Username is required</mat-error>
+                        }
+                    </mat-form-field>
+                </div>
+                <div class="form-group">
+                    <mat-form-field>
+                        <mat-label aria-label="Password label">Password</mat-label>
+                        <input [type]="hidePassword() ? 'password' : 'text'" matInput aria-placeholder="Enter your password"
+                            aria-required="true" placeholder="Enter your password" [formControl]="password"
+                            id="passwordField" data-password-field="">
+                        <button mat-icon-button matSuffix (click)="onShowPassword($event)"
+                            [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword()">
+                            <mat-icon>{{hidePassword() ? 'visibility_off' : 'visibility'}}</mat-icon>
                         </button>
-                    }
-                </form>
-            </div>
-        </div>
+                        @if (password.hasError('required')) {
+                        <mat-error aria-errormessage="passwordField">Password is required</mat-error>
+                        }
+                    </mat-form-field>
+                </div>
+                <a mat-button aria-label="Forgot password button" color="primary" [routerLink]="['/forgot-password']"
+                    data-forgot-password-btn="">
+                    Forgot Password?
+                </a>
+                <a mat-button aria-label="Create Account button" color="primary" [routerLink]="['/register-user']"
+                    data-create-account-btn="">
+                    Create Account
+                </a>
+                <button aria-label="Login button" mat-flat-button color="primary" [disabled]="!formGroup.valid"
+                    type="submit" data-login-btn="">
+                    Login
+                </button>
+            }
+        </form>
     </div>
 </div>

@@ -50,6 +50,7 @@ export class UserService {
       map(() => {
         // since json-placeholder returns mock data. We manually create the user object
         return {
+          id: '1',
           email: 'test@test.com',
           password: 'a9yhd7s1',
           firstName: 'jon',

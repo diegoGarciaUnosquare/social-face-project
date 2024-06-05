@@ -1,10 +1,8 @@
+@import '../../../styles/mixins.scss';
+
 .create-user-container {
-  align-items: center;
-  display: flex;
+  @include flex-box-center;
   flex-direction: column;
-  height: 360px;
-  justify-content: center;
-  width: 100%;
 
   .user-creation-stepper {
     width: 60%;

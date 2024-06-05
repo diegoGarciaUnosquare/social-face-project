@@ -2,14 +2,19 @@ import { createFeatureSelector, createSelector } from "@ngrx/store";
 
 import { AppState } from "./user.reducer";
 
-export const selectAuthState = createFeatureSelector<AppState>('user');
+export const selectUserState = createFeatureSelector<AppState>('user');
 
 export const getErrors = createSelector(
-    selectAuthState,
+    selectUserState,
     (state: AppState) => state.error ? state.error : null,
 );
 
 export const getUser = createSelector(
-    selectAuthState,
+    selectUserState,
     (state: AppState) => state.user ? state.user : null,
+);
+
+export const getUserId = createSelector(
+    selectUserState,
+    (state: AppState) => state.user ? state.user.id : null,
 );
