@@ -47,6 +47,10 @@ export class UpdatePasswordFormComponent implements OnInit {
     this.handleUpdatePasswordFailure().subscribe();
   }
 
+  /**
+   * This getter is used to check if the password matches the confirm password.
+   * @returns boolean
+   */
   public get passwordMatches(): boolean {
     if (this.newPassword.value === '' || this.confirmPassword.value === '') {
       return false;
@@ -54,6 +58,11 @@ export class UpdatePasswordFormComponent implements OnInit {
     return this.newPassword.value === this.confirmPassword.value;
   }
 
+  /**
+   * This method is used to handle the form submission.
+   * It will check if the form is valid and dispatch the update password action.
+   * @returns void
+   */
   public onSubmit(): void {
     if (this.formGroup.valid) {
       this.isLoading.update(() => true);
@@ -61,6 +70,12 @@ export class UpdatePasswordFormComponent implements OnInit {
     }
   }
 
+  /**
+   * This method is used to handle the update password success.
+   * It will set the loading state to false and display a success message.
+   * It will also navigate to the login screen after 2 seconds.
+   * @returns Observable<void>
+   */
   private handleUpdatePasswordSuccess(): Observable<void> { 
     return this.actions$.pipe(
       ofType(updatePasswordSuccess),
@@ -72,6 +87,11 @@ export class UpdatePasswordFormComponent implements OnInit {
     );
   }
 
+  /**
+   * This method is used to handle the update password failure.
+   * It will set the loading state to false and display an error message.
+   * @returns Observable<void>
+   */
   private handleUpdatePasswordFailure(): Observable<void> {
     return this.actions$.pipe(
       ofType(updatePasswordFailure),
@@ -83,6 +103,9 @@ export class UpdatePasswordFormComponent implements OnInit {
     );
   }
 
+  /**
+   * This method is used to navigate to the login screen after the password is updated successfully.
+   */  
   private navigateToLogin(): void {
     setTimeout(() => {
       this.router.navigate(['login']);

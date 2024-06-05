@@ -70,6 +70,11 @@ export class CreateUserComponent implements OnInit {
     this.handleUserCreationSuccess().subscribe();
   }
 
+  /**
+   * This method is used to handle the form submission.
+   * It will check if the form is valid and dispatch the create user action.
+   * @returns void
+   */
   public onSubmit(): void {
     if (this.createAccountFormGroup.valid) {
       const payload: IUser = {
@@ -85,6 +90,11 @@ export class CreateUserComponent implements OnInit {
     }
   }
 
+  /**
+   * This method is used to handle the user creation error.
+   * If creation fails, it will display an error message.
+   * @returns Observable<void>
+   */
   private handleUserCreationError(): Observable<void> {
     return this.actions$.pipe(
       ofType(createUserFailure),
@@ -96,6 +106,11 @@ export class CreateUserComponent implements OnInit {
     );
   }
 
+  /**
+   * This method is used to handle the user creation success.
+   * If creation is successful it will move the stepper to the next step.
+   * @returns Observable<void>
+   */
   private handleUserCreationSuccess(): Observable<void> {
     return this.actions$.pipe(
       ofType(createUserSuccess),

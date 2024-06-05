@@ -12,6 +12,11 @@ export class FeedService {
 
   constructor(private httpClient: HttpClient) { }
 
+  /**
+   * This method is used to fetch all the posts from the server.
+   * @param userId: This parameter is not used in this method.
+   * @returns Observable<Post[]>
+   */
   public fetchPosts(userId: string): Observable<Post[]> {
     return this.httpClient.get(`${this.url}social-post`).pipe(
       map((response: any) => {

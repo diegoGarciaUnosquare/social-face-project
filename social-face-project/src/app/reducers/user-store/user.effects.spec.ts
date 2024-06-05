@@ -8,7 +8,7 @@ import { UserService } from '../../../shared/services/user-service/user-service.
 import UserServiceMock from '../../../../unit-tests/mocks/services/user-service-mock';
 import { provideMockActions } from '@ngrx/effects/testing';
 
-describe('AppEffects', () => {
+describe('UserEffects', () => {
   let actions$: ReplaySubject<any>;
   let spyUserService: jasmine.SpyObj<UserService>;
   let effects: UserEffects;

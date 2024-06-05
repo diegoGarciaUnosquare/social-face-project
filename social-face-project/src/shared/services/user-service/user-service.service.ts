@@ -1,5 +1,5 @@
-import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { Observable, catchError, map, of, switchMap } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, catchError, map } from 'rxjs';
 
 import { IUser } from '../../interfaces/user.interface';
 import { Injectable } from '@angular/core';
@@ -13,6 +13,11 @@ export class UserService {
 
   constructor(private httpService: HttpClient) { }
 
+  /**
+   * This method is in charge of creating a new user and sending the date to a mocked backend
+   * @param userData Payload to create a new user
+   * @returns Observable<IUser>
+   */
   public createUser(userData: IUser): Observable<IUser> {
     return this.httpService.post(`${this.url}create-user`, userData).pipe(
       map((response: any) => {
@@ -25,6 +30,11 @@ export class UserService {
     );
   }
 
+  /**
+   * This method is used to validate if an email exists in the database
+   * @param email Email to validate
+   * @returns Observable<boolean>
+   */
   public validateEmail(email: string): Observable<boolean> {
     return this.httpService.post(`${this.url}validate-email`, {
       email
@@ -36,6 +46,11 @@ export class UserService {
     );
   }
 
+  /**
+   * This method is used to update the password of a given user
+   * @param username Username to validate
+   * @returns Observable<boolean>
+   */
   public updatePassword(password: string): Observable<string> {
     return this.httpService.post(`${this.url}update-password`, { password }).pipe(
       map((updatedPassword: any) => updatedPassword),
@@ -45,6 +60,12 @@ export class UserService {
     );
   }
 
+  /**
+   * This method is used to login a user
+   * @param username Username to login
+   * @param password Password to login
+   * @returns Observable<IUser>
+   */
   public login(username: string, password: string): Observable<IUser> {
     return this.httpService.post(`${this.url}login-user`, { username, password }).pipe(
       map(() => {

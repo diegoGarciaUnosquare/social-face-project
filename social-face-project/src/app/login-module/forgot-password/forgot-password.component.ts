@@ -18,6 +18,12 @@ export class ForgotPasswordComponent {
   constructor() {
   }
 
+  /**
+   * This method is used to handle the email validation output event.
+   * If the email is valid, it will show the update password form.
+   * @param isValid: This parameter is used to check if the email entered is valid.
+   * @returns void
+   */
   public onEmailValidated(isValid: boolean): void {
     if (isValid) {
       this.showUpdatePasswordForm.update(() => true);
