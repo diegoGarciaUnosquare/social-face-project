@@ -25,7 +25,6 @@ import { passwordRegex } from '../../../shared/constants/regex';
   styleUrl: './create-user.component.scss'
 })
 export class CreateUserComponent implements OnInit {
-  public stepperOrientation: Observable<StepperOrientation>;
   public email: FormControl = new FormControl('', [
     Validators.required,
     Validators.email,
@@ -59,11 +58,7 @@ export class CreateUserComponent implements OnInit {
     private actions$: Actions,
     private snackbarService: SnackbarService,
     private store: Store<AppState>,
-  ) {
-    this.stepperOrientation = breakpointObserver
-      .observe('(min-width: 800px)')
-      .pipe(map(({ matches }) => (matches ? 'horizontal' : 'vertical')));
-  }
+  ) {}
 
   ngOnInit(): void {
     this.handleUserCreationError().subscribe();
@@ -88,6 +83,12 @@ export class CreateUserComponent implements OnInit {
       }
       this.store.dispatch(createUser({ userData: payload }));
     }
+  }
+
+  public stepperOrientation(): Observable<StepperOrientation> {
+    return this.breakpointObserver
+      .observe('(min-width: 800px)')
+      .pipe(map(({ matches }) => (matches ? 'horizontal' : 'vertical')));
   }
 
   /**

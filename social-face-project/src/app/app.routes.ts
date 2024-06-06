@@ -5,6 +5,23 @@ import { authUserGuard } from '../shared/guards/auth-user.guard';
 
 export const routes: Routes = [
     {
+        path: 'feed',
+        canActivate: [authUserGuard],
+        loadComponent: () => import('./feed/feed.component').then(c => c.FeedComponent),
+        loadChildren: () => [
+            {
+                path: '',
+                pathMatch: 'full',
+                redirectTo: 'posts',
+            },
+            {
+                path: 'posts',
+                pathMatch: 'full',
+                loadComponent: () => import('./feed/posts/posts.component').then(c => c.PostsComponent),
+            }
+        ]
+    },
+    {
         path: '',
         component: AppComponent,
         loadChildren: () => [
@@ -29,23 +46,6 @@ export const routes: Routes = [
                 loadComponent: () => import('./login-module/forgot-password/forgot-password.component').then(c => c.ForgotPasswordComponent),
             }
         ],
-    },
-    {
-        path: 'feed',
-        canActivate: [authUserGuard],
-        loadComponent: () => import('./feed/feed.component').then(c => c.FeedComponent),
-        loadChildren: () => [
-            {
-                path: '',
-                pathMatch: 'full',
-                redirectTo: 'posts',
-            },
-            {
-                path: 'posts',
-                pathMatch: 'full',
-                loadComponent: () => import('./feed/posts/posts.component').then(c => c.PostsComponent),
-            }
-        ]
     },
     { path: '**', component: PageNotFoundComponent },
 ];

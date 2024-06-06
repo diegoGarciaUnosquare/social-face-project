@@ -1,1 +1,15 @@
-<p>navbar works!</p>
+<mat-toolbar class="navbar-container" color="primary" data-navbar-container="">
+    @if(shouldDisplayMenu() | async) {
+        <button mat-icon-button class="menu-icon" aria-label="icon button - menu" data-sidenav-menu-button="">
+            <mat-icon>menu</mat-icon>
+        </button>
+    }
+    <span>Social Face</span>
+    <span class="spacer"></span>
+    <button mat-button aria-label="Settings navigation option">
+        Settings
+    </button>
+    <button mat-icon-button aria-label="Icon button - Profile">
+        <mat-icon>share</mat-icon>
+    </button>
+</mat-toolbar>

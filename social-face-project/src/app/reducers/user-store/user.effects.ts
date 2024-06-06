@@ -6,11 +6,12 @@ import { catchError, map, of, switchMap } from 'rxjs';
 import { IError } from '../../../shared/interfaces/error.interface';
 import { IUser } from '../../../shared/interfaces/user.interface';
 import { Injectable } from '@angular/core';
+import { LocalStorageService } from '../../../shared/services/local-storage-service/local-storage.service';
 import { UserService } from '../../../shared/services/user-service/user-service.service';
 
 @Injectable()
 export class UserEffects {
-    constructor(private actions$: Actions, private userService: UserService) { }
+    constructor(private actions$: Actions, private userService: UserService, private localStorageService: LocalStorageService) { }
 
     createUser$ = createEffect(() => this.actions$.pipe(
         ofType(UserActions.createUser),
@@ -74,7 +75,10 @@ export class UserEffects {
         ofType(UserActions.loginUser),
         map(action => action),
         switchMap(({ username, password }) => this.userService.login(username, password).pipe(
-            map((user: IUser) => UserActions.loginUserSuccess({ user })),
+            map((user: IUser) => {
+                this.localStorageService.setItem('loginToken', user.token!);
+                return UserActions.loginUserSuccess({ user });
+            }),
             catchError((errorData: Error) => {
                 const error: IError = {
                     message: errorData.message,

@@ -7,10 +7,13 @@ import { UserEffects } from './user.effects';
 import { UserService } from '../../../shared/services/user-service/user-service.service';
 import UserServiceMock from '../../../../unit-tests/mocks/services/user-service-mock';
 import { provideMockActions } from '@ngrx/effects/testing';
+import { LocalStorageService } from '../../../shared/services/local-storage-service/local-storage.service';
+import LocalStorageMockService from '../../../../unit-tests/mocks/services/local-storage-service-mock';
 
 describe('UserEffects', () => {
   let actions$: ReplaySubject<any>;
   let spyUserService: jasmine.SpyObj<UserService>;
+  let spyLocalStorageService: jasmine.SpyObj<LocalStorageService>;
   let effects: UserEffects;
   let sub: Subscription;
 
@@ -21,13 +24,18 @@ describe('UserEffects', () => {
         provideMockActions(() => actions$),
         {
           provide: UserService,
-          useClass: UserServiceMock
+          useClass: UserServiceMock,
+        },
+        {
+          provide: LocalStorageService,
+          useClass: LocalStorageMockService,
         }
       ]
     });
 
     effects = TestBed.inject(UserEffects);
     spyUserService = TestBed.inject(UserService) as jasmine.SpyObj<UserService>;
+    spyLocalStorageService = TestBed.inject(LocalStorageService) as jasmine.SpyObj<LocalStorageService>;
   });
 
   afterEach(() => {

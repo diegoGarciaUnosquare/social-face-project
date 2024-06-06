@@ -1,11 +1,11 @@
-import { RouterModule, RouterOutlet } from '@angular/router';
-
 import { Component } from '@angular/core';
+import { NavbarComponent } from '../../shared/components/navbar/navbar.component';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-feed',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, NavbarComponent],
   templateUrl: './feed.component.html',
   styleUrl: './feed.component.scss'
 })
