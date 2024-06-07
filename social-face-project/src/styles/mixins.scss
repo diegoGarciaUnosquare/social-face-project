@@ -9,3 +9,7 @@
   justify-content: center;
   width: 100vw;
 }
+
+@mixin box-shadow {
+  box-shadow: -14px 4px 50px 0px rgba(0,0,0,0.3)
+}

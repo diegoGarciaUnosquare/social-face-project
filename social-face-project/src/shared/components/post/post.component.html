@@ -1,14 +1,23 @@
-<mat-card>
-    <mat-card-content>
-        <p>
+<mat-card class="post-container" data-post-container="">
+    <mat-card-subtitle>
+        <p class="post-content" aria-label="message of the post">
             {{ post!.content }}
         </p>
-    </mat-card-content>
+    </mat-card-subtitle>
     @if(post!.imageUrl) {
-        <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+        <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of post">
     }
-    <mat-card-actions>
-        <button mat-button>LIKE</button>
-        <button mat-button>SHARE</button>
+    <mat-card-content>
+        @for(comment of post!.comments; track comment.id) {
+            <p> {{ comment.content }} </p>
+        }
+    </mat-card-content>
+    <mat-card-footer>
+        <span class="post-like-amount" aria-label="Message to show how many likes the post has."> Likes: {{ likes() }} </span>
+        <span class="post-comments-amount" aria-label="Message to show how many comments the post has."> Comments: {{ commentsAmount() }} </span>
+    </mat-card-footer>
+    <mat-card-actions aria-label="post action button section">
+        <button mat-button data-post-like-btn="" aria-label="Like button">LIKE</button>
+        <button mat-button data-post-comment-btn="" aria-label="Add comment button">ADD COMMENT</button>
     </mat-card-actions>
 </mat-card>

@@ -1,0 +1,16 @@
+@import "../../../styles/variables";
+
+.ad-container {
+  h2.ad-title {
+    color: $core-text-color-white;
+    font-size: 1.5rem;
+    padding-left: 10px;
+    padding-top: 10px;
+  }
+
+  p.ad-description {
+    color: $core-text-color-white;
+    font-size: 1rem;
+    padding-bottom: 15px;
+  }
+}

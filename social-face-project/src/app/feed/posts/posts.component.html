@@ -2,7 +2,9 @@
     <div class="post-list-container">
         @for(post of postList(); track post.id; let idx = $index) {
             @if(idx > 0 && idx % 4 === 0) {
-                <p>here comes an ad</p>
+                <article class="post-article" aria-label="ad">
+                    <app-ad [ad]="ad()"></app-ad>
+                </article>
             } @else {
                 <article class="post-article" aria-label="Post">
                     <app-post [post]="post"></app-post>
