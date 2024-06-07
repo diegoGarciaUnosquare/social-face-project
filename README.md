@@ -18,9 +18,17 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-## Running end-to-end tests
+## Running Cypress - E2E tests
+In order to run the E2E tests, you need to run the following command:
+ `npx cypress run`
 
-Section in construction. More information soon.
+This command will run all the cypress tests. If you want to run a specific test, you can use the following command:
+ `npx cypress open`
+This command will open the cypress interface, where you can select the browser upon the test will be run, along with
+selecting the test that you want to run.
+
+## Backend
+The backend for this project is being mocked. This project implements "json-placeholder" as the backend. The data is being fetched from the following link: [json-placeholder](https://my-json-server.typicode.com/diegoGarciaUnosquare/social-face-project-mock-server/)
 
 ## CI/CD Pipeline
 CI/CD is being handle with GitHub Actions. The pipeline is triggered when a push is made to the main branch. 
