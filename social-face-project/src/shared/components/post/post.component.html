@@ -1,4 +1,4 @@
-<mat-card class="post-container" data-post-container="">
+<mat-card class="post-container" [id]="elementId">
     <mat-card-subtitle>
         <p class="post-content" aria-label="message of the post">
             {{ post!.content }}
@@ -8,16 +8,38 @@
         <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of post">
     }
     <mat-card-content>
-        @for(comment of post!.comments; track comment.id) {
-            <p> {{ comment.content }} </p>
+        @if (post!.comments.length > 0) {
+            <div>
+                @for(comment of post!.comments; track comment.id) {
+                    <p class="post-text-message"> {{ comment.content }} </p>
+                }
+            </div>
         }
+        <div class="post-amounts-container">
+            <span class="post-like-amount" aria-label="Message to show how many likes the post has."> Likes: {{ likes() }} </span>
+            <span class="post-comments-amount" aria-label="Message to show how many comments the post has."> Comments: {{ commentsAmount() }} </span>
+        </div>
     </mat-card-content>
     <mat-card-footer>
-        <span class="post-like-amount" aria-label="Message to show how many likes the post has."> Likes: {{ likes() }} </span>
-        <span class="post-comments-amount" aria-label="Message to show how many comments the post has."> Comments: {{ commentsAmount() }} </span>
+        @if(showCommentsForm()) {
+            <form [formGroup]="formGroup" (keyup.enter)="onSubmit()">
+                <mat-form-field class="post-comment-field">
+                    <textarea
+                        matInput 
+                        aria-required="true" 
+                        id="addCommentFieldInput"
+                        [formControl]="addCommentField"
+                        type="text" data-add-comment-field="">
+                    </textarea>
+                    @if(addCommentField.hasError('required')) {
+                        <mat-error aria-errormessage="addCommentFieldInput" aria-label="Comment is required error message">Comment is required</mat-error>
+                    }
+                </mat-form-field>
+            </form>
+        }
     </mat-card-footer>
     <mat-card-actions aria-label="post action button section">
-        <button mat-button data-post-like-btn="" aria-label="Like button">LIKE</button>
-        <button mat-button data-post-comment-btn="" aria-label="Add comment button">ADD COMMENT</button>
+        <button mat-button data-post-like-btn="" aria-label="Like button" (click)="onLike()">LIKE</button>
+        <button mat-button data-post-comment-btn="" aria-label="Add comment button" (click)="onAddComment()">ADD COMMENT</button>
     </mat-card-actions>
 </mat-card>

@@ -3,11 +3,11 @@
         @for(post of postList(); track post.id; let idx = $index) {
             @if(idx > 0 && idx % 4 === 0) {
                 <article class="post-article" aria-label="ad">
-                    <app-ad [ad]="ad()"></app-ad>
+                    <app-ad [ad]="ad()" [index]="idx"></app-ad>
                 </article>
             } @else {
                 <article class="post-article" aria-label="Post">
-                    <app-post [post]="post"></app-post>
+                    <app-post [post]="post" [index]="idx"></app-post>
                 </article>
             }
         }

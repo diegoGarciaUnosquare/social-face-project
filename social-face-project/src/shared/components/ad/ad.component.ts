@@ -11,5 +11,8 @@ import { MatCardModule } from '@angular/material/card';
   styleUrl: './ad.component.scss'
 })
 export class AdComponent {
-  @Input() ad: Ad | undefined;
+  @Input() ad: Ad | null = null;
+  @Input() public index: number | null = null;
+
+  public elementId: string = `ad-container-${this.index!}`;
 }

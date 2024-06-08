@@ -32,3 +32,33 @@ export const fetchAdsFailure = createAction(
     '[Feed page] Fetch Ads Failure',
     props<{ error: IError }>()
 );
+
+export const likePost = createAction(
+    '[Feed page] Like Post',
+    props<{ postId: string }>()
+);
+
+export const likePostSuccess = createAction(
+    '[Feed page] Like Post Success',
+    props<{ posts: Post[] }>()
+);
+
+export const likePostFailure = createAction(
+    '[Feed page] Like Post Failure',
+    props<{ error: IError }>()
+);
+
+export const addComment = createAction(
+    '[Feed page] Add Comment',
+    props<{ postId: string, content: string, userId: string }>()
+);
+
+export const addCommentSuccess = createAction(
+    '[Feed page] Add Comment Success',
+    props<{ posts: Post[] }>()
+);
+
+export const addCommentFailure = createAction(
+    '[Feed page] Add Comment Failure',
+    props<{ error: IError }>()
+);

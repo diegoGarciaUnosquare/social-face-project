@@ -1,21 +1,39 @@
 @import "../../../styles/variables";
 
 .post-container {
-    p.post-content {
-        color: $core-text-color-white;
-        font-size: 1rem;
-        padding: 15px;
-    }
+  p.post-content {
+    color: $core-text-color-white;
+    font-size: 1rem;
+    padding: 15px;
+  }
 
-    .mat-mdc-card-footer {
-        margin-top: 10px;
-    }
+  .mat-mdc-card-footer {
+    margin-top: 10px;
+  }
 
-    span.post-like-amount,
-    span.post-comments-amount {
-        color: $core-text-color-white;
-        font-size: 0.8rem;
-        font-weight: 700;
-        margin-left: 15px;
-    }
+  span.post-like-amount,
+  span.post-comments-amount {
+    color: $core-text-color-white;
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin-left: 15px;
+  }
+
+  .post-comment-field {
+    padding: 0 10px;
+    width: 95%;
+  }
+
+  .post-amounts-container {
+    position: relative;
+    right: 6%;
+    padding-top: 5px;
+  }
+
+  .post-text-message {
+    background-color: #fff;
+    border-radius: 7px;
+    text-align: left;
+    padding: 5px;
+  }
 }

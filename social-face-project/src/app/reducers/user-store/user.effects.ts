@@ -11,7 +11,13 @@ import { UserService } from '../../../shared/services/user-service/user-service.
 
 @Injectable()
 export class UserEffects {
-    constructor(private actions$: Actions, private userService: UserService, private localStorageService: LocalStorageService) { }
+    private url: string = 'https://my-json-server.typicode.com/diegoGarciaUnosquare/social-face-project-mock-server/';
+
+    constructor(
+        private actions$: Actions,
+        private localStorageService: LocalStorageService,
+        private userService: UserService,
+    ) { }
 
     createUser$ = createEffect(() => this.actions$.pipe(
         ofType(UserActions.createUser),
@@ -22,7 +28,7 @@ export class UserEffects {
                 const error: IError = {
                     message: errorData.message,
                     status: 500,
-                    url: 'http://localhost:3000/users',
+                    url: `${this.url}create-user`,
                 };
                 return of(UserActions.createUserFailure({ error }));
             })
@@ -40,7 +46,7 @@ export class UserEffects {
                 const error: IError = {
                     message: 'Invalid email',
                     status: 400,
-                    url: 'http://localhost:3000/validate-email',
+                    url: `${this.url}validate-email`,
                 };
                 return UserActions.validateEmailFailure({ error});
             }),
@@ -48,7 +54,7 @@ export class UserEffects {
                 const error: IError = {
                     message: errorData.message,
                     status: 500,
-                    url: 'http://localhost:3000/validate-email',
+                    url: `${this.url}validate-email`,
                 };
                 return of(UserActions.validateEmailFailure({ error }));
             })
@@ -64,7 +70,7 @@ export class UserEffects {
                 const error: IError = {
                     message: errorData.message,
                     status: 500,
-                    url: 'http://localhost:3000/user/1/password',
+                    url: `${this.url}update-password`,
                 };
                 return of(UserActions.updatePasswordFailure({ error }));
             })
@@ -83,7 +89,7 @@ export class UserEffects {
                 const error: IError = {
                     message: errorData.message,
                     status: 500,
-                    url: 'http://localhost:3000/login',
+                    url: `${this.url}login-user`,
                 };
                 return of(UserActions.loginUserFailure({ error }));
             })

@@ -54,4 +54,38 @@ export const feedReducer = createReducer(
             error
         };
     }),
+    on(FeedActions.likePost, (state) => {
+        return {
+            ...state,
+        };
+    }),
+    on(FeedActions.likePostSuccess, (state, { posts }) => {
+        return {
+            ...state,
+            posts: posts,
+        };
+    }),
+    on(FeedActions.likePostFailure, (state, { error }) => {
+        return {
+            ...state,
+            error
+        };
+    }),
+    on(FeedActions.addComment, (state) => {
+        return {
+            ...state,
+        };
+    }),
+    on(FeedActions.addCommentSuccess, (state, { posts }) => {
+        return {
+            ...state,
+            posts,
+        };
+    }),
+    on(FeedActions.addCommentFailure, (state, { error }) => {
+        return {
+            ...state,
+            error
+        };
+    }),
 );

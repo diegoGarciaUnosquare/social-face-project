@@ -19,5 +19,12 @@
             width: 30%;
             @include box-shadow;
         }
+
+        @media screen and (max-width: 768px) {
+            .post-article {
+                width: 100%;
+            }
+            
+        }
     }
 }

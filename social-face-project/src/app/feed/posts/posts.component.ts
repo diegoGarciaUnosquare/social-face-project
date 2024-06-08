@@ -22,7 +22,7 @@ import { getUserId } from '../../reducers/user-store/user.selectors';
 export class PostsComponent implements OnInit {
   public postList: WritableSignal<Post[]> = signal([]);
   public posts: Subject<Post[]> = new Subject<Post[]>();
-  public ad: WritableSignal<Ad | undefined> = signal(undefined);
+  public ad: WritableSignal<Ad | null> = signal(null);
 
   constructor(private store$: Store<FeedState>) {}
 
