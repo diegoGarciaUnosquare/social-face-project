@@ -115,7 +115,7 @@ describe('CreateUserComponent', () => {
       } as any;
 
       actions$ = new ReplaySubject(1);
-      actions$.next(createUserSuccess({ createdUser: mockUser }));
+      actions$.next(createUserSuccess());
       sub = component['handleUserCreationSuccess']().subscribe(() => {
         expect(component['createUserStepper']!.next).toHaveBeenCalled();
       });

@@ -20,10 +20,7 @@ export const authUserGuard: CanActivateFn = () => {
   return store.select(getUser).pipe(
     take(1),
     map((user: IUser | null) => {
-      console.log('auth-guard');
-      console.log('user', user);
       const localStorageToken = localStorageService.getItem('loginToken');
-      console.log('token', localStorageToken);
       if (localStorageToken) {
         return true;
       }

@@ -27,7 +27,7 @@ export class PostComponent implements OnInit {
   public showCommentsForm: WritableSignal<boolean> = signal(false);
   public likes: WritableSignal<number> = signal(0);
 
-  constructor(private actions$: Actions, private store: Store<FeedState>) {
+  constructor(private store: Store<FeedState>) {
     this.formGroup = new FormGroup({
       addCommentField: this.addCommentField
     });

@@ -1,12 +1,12 @@
 <mat-card class="ad-container" [id]="elementId">
     <mat-card-title>
         <h2 class="ad-title" aria-label="advertising title">
-            {{ ad!.title }}
+            {{ ad?.title }}
         </h2>
     </mat-card-title>
     <mat-card-content>
         <p class="ad-description" aria-label="advertising message">
-            {{ ad!.description }}
+            {{ ad?.description }}
         </p>
     </mat-card-content>
     <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" aria-label="Advertising image" alt="Photo for advertising">

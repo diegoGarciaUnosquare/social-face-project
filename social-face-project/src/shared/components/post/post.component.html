@@ -1,16 +1,16 @@
 <mat-card class="post-container" [id]="elementId">
     <mat-card-subtitle>
         <p class="post-content" aria-label="message of the post">
-            {{ post!.content }}
+            {{ post?.content !}}
         </p>
     </mat-card-subtitle>
-    @if(post!.imageUrl) {
+    @if(post?.imageUrl!) {
         <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of post">
     }
     <mat-card-content>
-        @if (post!.comments.length > 0) {
+        @if (post?.comments!.length > 0) {
             <div>
-                @for(comment of post!.comments; track comment.id) {
+                @for(comment of post?.comments!; track comment.id) {
                     <p class="post-text-message"> {{ comment.content }} </p>
                 }
             </div>

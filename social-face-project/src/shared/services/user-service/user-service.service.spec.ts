@@ -77,6 +77,22 @@ describe('UserService', () => {
       });
     });
 
+    it('should return an error', (done: DoneFn) => {
+      const errorMessage = 'Error validating email';
+      sub = service.validateEmail(email).subscribe({
+        next: () => {
+          fail(errorMessage);
+        },
+        error: (error) => {
+          expect(error).toBeTruthy();
+          done();
+        }
+      });
+
+      const req = httpController.expectOne(`${service['url']}validate-email`);
+      req.flush('error', { status: 500, statusText: errorMessage });
+    });
+
   });
 
   describe('updatePassword', () => {
