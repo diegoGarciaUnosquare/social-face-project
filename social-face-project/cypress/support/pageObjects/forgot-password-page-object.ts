@@ -29,7 +29,7 @@ export class ForgotPasswordPageObject {
 
     public enterEmail(): void {
         cy.get(this.forgotPasswordForm).then((form: JQuery<HTMLElement>) => {
-            cy.wrap(form).find(this.emailInputField).type('jon@test.com');
+            cy.wrap(form).find(this.emailInputField).type('jon@test.com', { force: true });
         });
     }
 

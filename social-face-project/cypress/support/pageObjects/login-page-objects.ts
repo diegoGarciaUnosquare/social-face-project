@@ -26,8 +26,8 @@ export class LoginPageObjects {
 
     public userEntersLoginCredentials(): void {
         cy.get(this.loginPageContainer).then((container: JQuery<HTMLElement>) => {
-            cy.wrap(container).find(this.usernameInputField).type('testUser');
-            cy.wrap(container).find(this.passwordInputField).type('a9yhd7s1');
+            cy.wrap(container).find(this.usernameInputField).type('testUser', { force: true });
+            cy.wrap(container).find(this.passwordInputField).type('a9yhd7s1', { force: true });
         });
     }
 }
