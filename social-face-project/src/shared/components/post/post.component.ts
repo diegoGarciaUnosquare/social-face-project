@@ -2,7 +2,6 @@ import { Component, Input, OnInit, WritableSignal, signal } from '@angular/core'
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { addComment, likePost } from '../../../app/reducers/feed-store/feed.actions';
 
-import { Actions } from '@ngrx/effects';
 import { CommonModule } from '@angular/common';
 import { FeedState } from '../../../app/reducers/feed-store/feed.reducer';
 import { MaterialComponentsModule } from '../../modules/material-components.module';
@@ -18,11 +17,11 @@ import { Store } from '@ngrx/store';
 })
 export class PostComponent implements OnInit {
   @Input() public post: Post | null = null;
-  @Input() public index: number | null = null;
+  @Input() public index: number = 0;
 
   public addCommentField: FormControl = new FormControl('', Validators.required);
   public commentsAmount: WritableSignal<number> = signal(0);
-  public elementId: string = `post-container-${this.index!}`;
+  public elementId: WritableSignal<string> = signal('');
   public formGroup: FormGroup;
   public showCommentsForm: WritableSignal<boolean> = signal(false);
   public likes: WritableSignal<number> = signal(0);
@@ -36,6 +35,7 @@ export class PostComponent implements OnInit {
   ngOnInit(): void {
     this.likes.set(this.post?.likes || 0);
     this.commentsAmount.set(this.post?.comments.length || 0);
+    this.elementId.update(() => `post-container-${this.index}`);
   }
 
   public onSubmit(): void {

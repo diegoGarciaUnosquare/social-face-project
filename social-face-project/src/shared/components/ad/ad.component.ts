@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit, WritableSignal, signal } from '@angular/core';
 
 import { Ad } from '../../interfaces/ad.interface';
 import { MatCardModule } from '@angular/material/card';
@@ -10,9 +10,13 @@ import { MatCardModule } from '@angular/material/card';
   templateUrl: './ad.component.html',
   styleUrl: './ad.component.scss'
 })
-export class AdComponent {
+export class AdComponent implements OnInit {
   @Input() ad: Ad | null = null;
-  @Input() public index: number | null = null;
+  @Input() public index: number = 0;
 
-  public elementId: string = `ad-container-${this.index!}`;
+  public elementId: WritableSignal<string> = signal('');
+
+  ngOnInit(): void {
+    this.elementId.update(() => `ad-container-${this.index}`);
+  }
 }
