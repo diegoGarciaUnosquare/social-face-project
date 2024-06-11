@@ -4,11 +4,12 @@ import { Observable, map } from 'rxjs';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component } from '@angular/core';
 import { MaterialComponentsModule } from '../../modules/material-components.module';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, MaterialComponentsModule, AsyncPipe],
+  imports: [CommonModule, MaterialComponentsModule, AsyncPipe, RouterModule],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })

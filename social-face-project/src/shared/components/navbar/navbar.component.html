@@ -6,10 +6,10 @@
     }
     <span>Social Face</span>
     <span class="spacer"></span>
-    <button mat-button aria-label="Settings navigation option">
+    <a [routerLink]="['/feed/settings']" routerLinkActive="router-link-active"  mat-button aria-label="Settings navigation option" data-navbar-option-settings="">
         Settings
-    </button>
-    <button mat-icon-button aria-label="Icon button - Profile">
+    </a>
+    <button mat-icon-button aria-label="Icon button - Profile" data-navbar-profile="">
         <mat-icon>share</mat-icon>
     </button>
 </mat-toolbar>

@@ -1,0 +1,63 @@
+<section class="settings-section-container" data-settings-section="">
+    @if(settings()) {
+        <mat-card class="settings-card-container" data-settings-container="">
+            @if(!isEditing()) {
+                <mat-card-header>
+                    <mat-card-title aria-label="name of the user"  class="settings-title-text">{{ settings()?.username }} | Settings</mat-card-title>
+                </mat-card-header>
+                <mat-card-content class="settings-options">
+                    <p aria-label="user notifications preference">Notifications Preference: <span> {{ getNotificationPreference() }}</span></p>
+                    <p aria-label="user profile visibility">Profile Visibility: <span> {{ getProfileVisibility() }} </span></p>
+                    <p aria-label="user username">Username <span> {{ settings()?.username }} </span></p>
+                    <p aria-label="user phone number">Phone <span> {{ settings()?.phone }} </span></p>
+                </mat-card-content>
+                <mat-card-actions aria-label="post action button section">
+                    <button mat-button data-export-csv-btn="" aria-label="export to CSV button" (click)="exportToCSV()">Export to CSV</button>
+                    <button mat-button data-update-settings-btn="" aria-label="update settings button" (click)="updateSettings()">Update Settings</button>
+                </mat-card-actions>
+            } @else {
+                <mat-card-header>
+                    <mat-card-title aria-label="update settings title" class="settings-title-text">Update Settings</mat-card-title>
+                </mat-card-header>
+                <mat-card-content class="settings-options">
+                    <form [formGroup]="formGroup" (ngSubmit)="saveSettings()">
+                        <div class="form-group-container">
+                            <mat-form-field>
+                                <mat-radio-group [formControl]="notificationPreferenceFormControl" aria-label="Select notification preference">
+                                    <mat-radio-button aria-label="Email Notifications" aria-checked="true"
+                                        data-notification-email-field="" value="0">
+                                        Email Notifications
+                                    </mat-radio-button>
+                                    <mat-radio-button aria-label="Browser Notifications" aria-checked="false"
+                                        data-notification-browser-field="" value="1">
+                                        Browser Notifications
+                                    </mat-radio-button>
+                                </mat-radio-group>
+                            </mat-form-field>
+                            <mat-slide-toggle
+                                [formControl]="profileVisibilityFormControl"
+                                color="primary"
+                                aria-label="Profile Visibility slide button"
+                                data-profile-privacy-toggle-btn="">
+                                Slide me!
+                            </mat-slide-toggle>
+                            <mat-form-field>
+                                <mat-label aria-label="Username">Username</mat-label>
+                                <input type="text" matInput aria-placeholder="Update your Username" placeholder="Enter your new username"
+                                    [formControl]="usernameFormControl" aria-required="false" data-update-username-field="">
+                            </mat-form-field>
+                            <mat-form-field>
+                                <mat-label aria-label="Phone number">Phone number</mat-label>
+                                <input type="tel" matInput aria-placeholder="Update your phone number" placeholder="Enter your new Phone number"
+                                    [formControl]="phoneFormControl" aria-required="false" data-update-phone-field="">
+                            </mat-form-field>
+                        </div>
+                    </form>
+                </mat-card-content>
+                <mat-card-actions>
+                    <button type="submit" mat-button data-submit-settings-btn="" aria-label="Submit settings button">Submit Settings</button>
+                </mat-card-actions>
+            }
+        </mat-card>
+    }
+</section>

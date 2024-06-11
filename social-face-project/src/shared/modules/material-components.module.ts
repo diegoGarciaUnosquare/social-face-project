@@ -8,6 +8,7 @@ import { MatListModule } from "@angular/material/list";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner"
 import { MatRadioModule } from "@angular/material/radio";
 import { MatSidenavModule } from "@angular/material/sidenav";
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatStepperModule } from "@angular/material/stepper";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { NgModule } from "@angular/core";
@@ -25,7 +26,8 @@ import { NgModule } from "@angular/core";
         MatStepperModule,
         MatProgressSpinnerModule,
         MatCheckboxModule,
-        MatRadioModule
+        MatRadioModule,
+        MatSlideToggleModule
     ],
     exports: [
         MatFormFieldModule,
@@ -39,7 +41,8 @@ import { NgModule } from "@angular/core";
         MatStepperModule,
         MatProgressSpinnerModule,
         MatCheckboxModule,
-        MatRadioModule
+        MatRadioModule,
+        MatSlideToggleModule
     ]
 })
 

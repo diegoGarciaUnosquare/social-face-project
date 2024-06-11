@@ -18,6 +18,11 @@ export const routes: Routes = [
                 path: 'posts',
                 pathMatch: 'full',
                 loadComponent: () => import('./feed/posts/posts.component').then(c => c.PostsComponent),
+            },
+            {
+                path: 'settings',
+                pathMatch: 'full',
+                loadComponent: () => import('./settings/settings.component').then(c => c.SettingsComponent),
             }
         ]
     },

@@ -4,6 +4,7 @@ import { metaReducers, reducers } from './reducers';
 
 import { FeedEffects } from './reducers/feed-store/feed.effects';
 import { HttpClientModule } from '@angular/common/http';
+import { SettingsEffects } from './reducers/settings-store/settings.effects';
 import { UserEffects } from './reducers/user-store/user.effects';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideEffects } from '@ngrx/effects';
@@ -17,7 +18,7 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(HttpClientModule),
     provideAnimationsAsync(),
     provideStore(reducers, { metaReducers }),
-    provideEffects(UserEffects, FeedEffects),
+    provideEffects(UserEffects, FeedEffects, SettingsEffects),
     provideStoreDevtools({
       maxAge: 25, // Retains last 25 states
       logOnly: true, // Restrict extension to log-only mode
