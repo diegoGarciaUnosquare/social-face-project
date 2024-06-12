@@ -1,0 +1,1 @@
+import{b as t,c as e}from"./chunk-UO3TCGKE.js";var g=t("[Settings page] Get Settings",e()),n=t("[Settings page] Get Settings Success",e()),i=t("[Settings page] Get Settings Failure",e()),S=t("[Settings page] Update Settings",e()),p=t("[Settings page] Update Settings Success",e()),a=t("[Settings page] Update Settings Failure",e());export{g as a,n as b,i as c,S as d,p as e,a as f};
