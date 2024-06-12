@@ -1,8 +1,9 @@
 import { Actions, ofType } from '@ngrx/effects';
 import { AsyncPipe, CommonModule } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatStepper, StepperOrientation } from '@angular/material/stepper';
+import { Router, RouterModule } from '@angular/router';
 import { createUser, createUserFailure, createUserSuccess } from '../../reducers/user-store/user.actions';
 import { map, take } from 'rxjs/operators';
 
@@ -12,7 +13,6 @@ import { IError } from '../../../shared/interfaces/error.interface';
 import { IUser } from '../../../shared/interfaces/user.interface';
 import { MaterialComponentsModule } from '../../../shared/modules/material-components.module';
 import { Observable } from 'rxjs';
-import { RouterModule } from '@angular/router';
 import { SnackbarService } from '../../../shared/services/snack-bar/snackbar.service';
 import { Store } from '@ngrx/store';
 import { passwordRegex } from '../../../shared/constants/regex';
@@ -58,6 +58,8 @@ export class CreateUserComponent implements OnInit {
     private actions$: Actions,
     private snackbarService: SnackbarService,
     private store: Store<AppState>,
+    private ngZone: NgZone,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -85,10 +87,26 @@ export class CreateUserComponent implements OnInit {
     }
   }
 
+  /**
+   * This method is used to determine the orientation of the stepper.
+   * If the screen is greater than 800px, the stepper will be horizontal.
+   * Otherwise, it will be vertical.
+   * @returns Observable<StepperOrientation>
+   */
   public stepperOrientation(): Observable<StepperOrientation> {
     return this.breakpointObserver
       .observe('(min-width: 800px)')
       .pipe(map(({ matches }) => (matches ? 'horizontal' : 'vertical')));
+  }
+
+  /**
+   * This method is used to navigate to the login page.
+   * @returns void
+   */
+  public navigateToLogin(): void {
+    this.ngZone.run(() => {
+      this.router.navigate(['/login']);
+    });
   }
 
   /**

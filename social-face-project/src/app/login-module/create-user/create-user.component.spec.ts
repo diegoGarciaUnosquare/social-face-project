@@ -4,6 +4,7 @@ import { ReplaySubject, Subscription, of } from 'rxjs';
 import { createUserFailure, createUserSuccess } from '../../reducers/user-store/user.actions';
 
 import { CreateUserComponent } from './create-user.component';
+import { NgZone } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { SnackbarService } from '../../../shared/services/snack-bar/snackbar.service';
 import SnackbarServiceMock from '../../../../unit-tests/mocks/services/snackbar-service-mocks';
@@ -19,6 +20,7 @@ describe('CreateUserComponent', () => {
   let initialState: AppState = userState;
   let spySnackService: jasmine.SpyObj<SnackbarService>;
   let sub: Subscription;
+  let ngZone: NgZone;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -37,6 +39,7 @@ describe('CreateUserComponent', () => {
 
     fixture = TestBed.createComponent(CreateUserComponent);
     spySnackService = TestBed.inject(SnackbarService) as jasmine.SpyObj<SnackbarService>;
+    ngZone = TestBed.inject(NgZone);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -105,6 +108,16 @@ describe('CreateUserComponent', () => {
       sub = component['handleUserCreationSuccess']().subscribe(() => {
         expect(component['createUserStepper']!.next).toHaveBeenCalled();
       });
+    });
+  });
+
+  describe('navigateToLogin', () => {
+    it('should navigate to login page', () => {
+      ngZone.run(() => {
+        spyOn(component['router'], 'navigate').and.callThrough();
+        component.navigateToLogin();
+        expect(component['router'].navigate).toHaveBeenCalledWith(['/login']);
+      })
     });
   });
 });

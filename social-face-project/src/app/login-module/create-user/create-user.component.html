@@ -86,21 +86,25 @@
                     </mat-form-field>
                     <mat-radio-group [formControl]="notificationPreference" aria-label="Select notification preference">
                         <mat-radio-button aria-label="Email Notifications" aria-checked="true"
-                            data-notification-email-field="" value="0">
+                            data-notification-email-field="" value="1">
                             Email Notifications
                         </mat-radio-button>
                         <mat-radio-button aria-label="Browser Notifications" aria-checked="false"
-                            data-notification-browser-field="" value="1">
+                            data-notification-browser-field="" value="2">
                             Browser Notifications
                         </mat-radio-button>
                     </mat-radio-group>
                 </div>
-                <div>
+                <div class="create-user-stepper-buttons-container">
                     @if (isLoading) {
                         <mat-spinner aria-label="Loading..." data-spinner=""></mat-spinner>
                     } @else {
                         <button aria-label="Navigate to next step" type="submit" mat-flat-button color="primary" data-next-button="">
                             Next
+                        </button>
+                        <button (click)="navigateToLogin()" aria-label="Return to login button" class="return-to-login-btn" mat-flat-button
+                            type="button" data-return-to-login-btn="">
+                            Return to Login
                         </button>
                     }
 

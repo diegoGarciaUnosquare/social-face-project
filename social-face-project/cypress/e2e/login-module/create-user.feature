@@ -17,3 +17,10 @@ Feature: Create User
         Then the user is taken account creation success screen
         When the user taps the navigate to login screen button
         Then the user should be taken to the login screen
+    
+    Scenario: User navigates clicks on the back button
+        Given the user is on the login screen
+        When the user taps on the create account button
+        Then the user is taken to the create account screen
+        When the user clicks on the return to login screen
+        Then the user should be taken to the login screen
