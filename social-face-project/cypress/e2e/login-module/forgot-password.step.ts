@@ -43,3 +43,7 @@ When("the user should navigate to the login screen", () => {
     cy.wait(2000);
     loginPO.userIsOnTheLoginScreen();
 })
+
+When("the user clicks on the return to login screen", () => {
+    forgotPasswordPO.clickReturnToLoginButton();
+})

@@ -97,7 +97,6 @@ export class LoginFormComponent implements OnInit {
     return this.actions$.pipe(
       ofType(loginUserSuccess),
       map(() => {
-        this.isLoading.update(() => false);
         this.navigateToPostsPage();
       })
     );
@@ -106,6 +105,7 @@ export class LoginFormComponent implements OnInit {
   private navigateToPostsPage(): void {
     this.ngZone.run(() => {
       setTimeout(() => {
+        this.isLoading.update(() => false);
         this.router.navigate(['/feed/posts']);
         }, 2000);
     });

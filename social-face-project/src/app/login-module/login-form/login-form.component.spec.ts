@@ -127,11 +127,9 @@ describe('LoginFormComponent', () => {
       actions$ = new ReplaySubject(1);
       actions$.next(loginUserSuccess({ user: user }));
 
-      spyOn(component, 'isLoading').and.callThrough();
       spyOn(component, 'navigateToPostsPage' as any).and.callThrough();
 
       sub = component['handleLoginSuccess']().subscribe(() => {
-        expect(component.isLoading()).toBeFalse();
         expect(component['navigateToPostsPage']).toHaveBeenCalled();
         done();
       });
@@ -142,8 +140,10 @@ describe('LoginFormComponent', () => {
     it('should navigate to posts page', fakeAsync(() => {
       ngZone.run(() => {
         spyOn(component['router'], 'navigate').and.callThrough();
+        spyOn(component, 'isLoading').and.callThrough();
         component['navigateToPostsPage']();
         tick(2000);
+        expect(component.isLoading()).toBeFalse();
         expect(component['router'].navigate).toHaveBeenCalled();
       });
     }));

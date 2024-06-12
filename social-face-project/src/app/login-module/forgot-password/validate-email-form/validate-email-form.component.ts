@@ -1,5 +1,5 @@
 import { Actions, ofType } from '@ngrx/effects';
-import { Component, EventEmitter, OnInit, Output, WritableSignal, signal } from '@angular/core';
+import { Component, EventEmitter, NgZone, OnInit, Output, WritableSignal, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Observable, map } from 'rxjs';
 import { validateEmail, validateEmailFailure, validateEmailSuccess } from '../../../reducers/user-store/user.actions';
@@ -7,6 +7,7 @@ import { validateEmail, validateEmailFailure, validateEmailSuccess } from '../..
 import { CommonModule } from '@angular/common';
 import { IError } from '../../../../shared/interfaces/error.interface';
 import { MaterialComponentsModule } from '../../../../shared/modules/material-components.module';
+import { Router } from '@angular/router';
 import { SnackbarService } from '../../../../shared/services/snack-bar/snackbar.service';
 import { Store } from '@ngrx/store';
 import { emailRegex } from '../../../../shared/constants/regex';
@@ -30,7 +31,9 @@ export class ValidateEmailFormComponent implements OnInit {
   constructor(
     private store$: Store,
     private actions$: Actions,
-    private snackService: SnackbarService
+    private snackService: SnackbarService,
+    private ngZone: NgZone,
+    private router: Router
   ) {
     this.formGroup = new FormGroup({
       validateEmailField: this.validateEmailField,
@@ -42,6 +45,11 @@ export class ValidateEmailFormComponent implements OnInit {
     this.handleValidateEmailError().subscribe();
   }
 
+  /**
+   * This method is used to submit the email to validate.
+   * If the form is valid, it will dispatch the validateEmail action.
+   * @returns void
+   */
   public onSubmit(): void {
     if (this.formGroup.valid) {
       this.isLoading.update(() => true);
@@ -49,7 +57,22 @@ export class ValidateEmailFormComponent implements OnInit {
     }
   }
 
-  public handleValidateEmailSuccess(): Observable<void> {
+  /**
+   * This method is used to navigate to the login page.
+   * @returns void
+   */
+  public navigateToLogin(): void {
+    this.ngZone.run(() => {
+      this.router.navigate(['/login']);
+    });
+  }
+
+  /**
+   * Method to handle the validateEmailSuccess action.
+   * This method will update the isLoading signal to false and emit the emailValidated event.
+   * @returns Observable<void>
+   */
+  private handleValidateEmailSuccess(): Observable<void> {
     return this.actions$.pipe(
       ofType(validateEmailSuccess),
       map(() => {
@@ -59,7 +82,12 @@ export class ValidateEmailFormComponent implements OnInit {
     );
   }
 
-  public handleValidateEmailError(): Observable<void> {
+  /**
+   * Method to handle the validateEmailFailure action.
+   * This method will update the isLoading signal to false and display the error message.
+   * @returns Observable<void>
+   */
+  private handleValidateEmailError(): Observable<void> {
     return this.actions$.pipe(
       ofType(validateEmailFailure),
       map((validateEmailError: { error: IError, type: string}) => {

@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReplaySubject, Subscription, of } from 'rxjs';
 import { validateEmailFailure, validateEmailSuccess } from '../../../reducers/user-store/user.actions';
 
+import { NgZone } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { SnackbarService } from '../../../../shared/services/snack-bar/snackbar.service';
 import SnackbarServiceMock from '../../../../../unit-tests/mocks/services/snackbar-service-mocks';
@@ -16,6 +17,7 @@ describe('ValidateEmailFormComponent', () => {
   let fixture: ComponentFixture<ValidateEmailFormComponent>;
   let spySnackService: jasmine.SpyObj<SnackbarService>;
   let sub: Subscription;
+  let ngZone: NgZone;
   const initialState = userState;
 
   beforeEach(async () => {
@@ -34,6 +36,7 @@ describe('ValidateEmailFormComponent', () => {
     
     fixture = TestBed.createComponent(ValidateEmailFormComponent);
     spySnackService = TestBed.inject(SnackbarService) as jasmine.SpyObj<SnackbarService>;
+    ngZone = TestBed.inject(NgZone);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -46,11 +49,11 @@ describe('ValidateEmailFormComponent', () => {
 
   describe('ngOnInit', () => {
     it('should call handleValidateEmailSuccess and handleValidateEmailError', () => {
-      spyOn(component, 'handleValidateEmailSuccess').and.returnValue(of());
-      spyOn(component, 'handleValidateEmailError').and.returnValue(of());
+      spyOn(component, 'handleValidateEmailSuccess' as any).and.returnValue(of());
+      spyOn(component, 'handleValidateEmailError' as any).and.returnValue(of());
       component.ngOnInit();
-      expect(component.handleValidateEmailSuccess).toHaveBeenCalled();
-      expect(component.handleValidateEmailError).toHaveBeenCalled();
+      expect(component['handleValidateEmailSuccess']).toHaveBeenCalled();
+      expect(component['handleValidateEmailError']).toHaveBeenCalled();
     });
   });
 
@@ -69,7 +72,7 @@ describe('ValidateEmailFormComponent', () => {
       actions$ = new ReplaySubject(1);
       actions$.next(validateEmailSuccess());
       spyOn(component.emailValidated, 'emit').and.callThrough();
-      sub = component.handleValidateEmailSuccess().subscribe(() => {
+      sub = component['handleValidateEmailSuccess']().subscribe(() => {
         expect(component.isLoading()).toBeFalse();
         expect(component.emailValidated.emit).toHaveBeenCalledWith(true);
       });
@@ -80,10 +83,20 @@ describe('ValidateEmailFormComponent', () => {
     it('should call snackService.openSnackBar when validateEmailFailure', () => {
       actions$ = new ReplaySubject(1);
       actions$.next(validateEmailFailure({ error: { message: 'test', status: 400, url: 'test'}}));
-      sub = component.handleValidateEmailError().subscribe(() => {
+      sub = component['handleValidateEmailError']().subscribe(() => {
         expect(component.isLoading()).toBeFalse();
         expect(spySnackService.openSnackBar).toHaveBeenCalled();
       });
+    });
+  });
+
+  describe('navigateToLogin', () => {
+    it('should navigate to login page', () => {
+      ngZone.run(() => {
+        spyOn(component['router'], 'navigate').and.callThrough();
+        component.navigateToLogin();
+        expect(component['router'].navigate).toHaveBeenCalledWith(['/login']);
+      })
     });
   });
 });

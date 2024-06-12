@@ -8,6 +8,7 @@ export class ForgotPasswordPageObject {
     validateEmailButton = '[data-validate-email-btn]';
     updatePasswordButton = '[data-update-password-btn]';
     forgotPasswordButton = '[data-forgot-password-btn]';
+    returnToLoginButton = '[data-return-to-login-btn]';
 
     public clickForgotPasswordButton(): void {
         cy.get(this.forgotPasswordButton).click();
@@ -51,5 +52,12 @@ export class ForgotPasswordPageObject {
             cy.wrap(button).should('be.enabled');
             cy.wrap(button).click();
         });
+    }
+
+    public clickReturnToLoginButton(): void {
+        cy.get(this.forgotPasswordContainer).within((elem: JQuery<HTMLElement>) => {
+            cy.wrap(elem).find(this.returnToLoginButton).should('be.visible');
+            cy.wrap(elem).find(this.returnToLoginButton).click();
+        })
     }
 }

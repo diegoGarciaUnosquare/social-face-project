@@ -36,4 +36,15 @@
             padding-bottom: 10px;
         }
     }
+
+
+    @media screen and (min-width: 320px) {
+        .settings-card-container {
+            width: 90%;
+        }
+        
+        .settings-options p {
+            padding: 7px 0px;
+        }
+    }
 }

@@ -21,3 +21,8 @@ Feature: Forgot Password feature
         When the user enters a new password
         And the user clicks on the update password button
         Then the user should navigate to the login screen
+    
+    Scenario: User navigates back to login screen
+        Given the user is on the forgot password screen
+        When the user clicks on the return to login screen
+        Then the user should navigate to the login screen
