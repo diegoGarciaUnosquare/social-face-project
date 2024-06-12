@@ -1,6 +1,5 @@
 export class NavbarPageObject {
     private navbarContainer ='[data-navbar-container]';
-    private navMenuList = '[data-nav-menu-list]';
     private feedOptionButton = '[data-navbar-option-feed]';
     private settingsOptionButton = '[data-navbar-option-settings]';
     private profileMenuButton = '[data-navbar-profile]';
