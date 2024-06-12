@@ -1,5 +1,5 @@
 import { Actions, ofType } from '@ngrx/effects';
-import { Component, OnInit, WritableSignal, signal } from '@angular/core';
+import { Component, NgZone, OnInit, WritableSignal, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Observable, map } from 'rxjs';
 import { Router, RouterModule } from '@angular/router';
@@ -38,7 +38,8 @@ export class LoginFormComponent implements OnInit {
     private actions$: Actions,
     private store: Store<AppState>,
     private snackbarService: SnackbarService,
-    private router: Router
+    private router: Router,
+    private ngZone: NgZone
   ) { }
 
   ngOnInit(): void {
@@ -97,8 +98,16 @@ export class LoginFormComponent implements OnInit {
       ofType(loginUserSuccess),
       map(() => {
         this.isLoading.update(() => false);
-        this.router.navigate(['/feed/posts']);
+        this.navigateToPostsPage();
       })
     );
+  }
+
+  private navigateToPostsPage(): void {
+    this.ngZone.run(() => {
+      setTimeout(() => {
+        this.router.navigate(['/feed/posts']);
+        }, 2000);
+    });
   }
 }

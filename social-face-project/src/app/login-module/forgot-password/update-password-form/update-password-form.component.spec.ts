@@ -1,15 +1,16 @@
 import { AppState, userState } from '../../../reducers/user-store/user.reducer';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { ReplaySubject, Subscription, of } from 'rxjs';
-import { RouterModule, provideRouter } from '@angular/router';
 import { updatePasswordFailure, updatePasswordSuccess } from '../../../reducers/user-store/user.actions';
 
+import { NgZone } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { SnackbarService } from '../../../../shared/services/snack-bar/snackbar.service';
 import SnackbarServiceMock from '../../../../../unit-tests/mocks/services/snackbar-service-mocks';
 import { UpdatePasswordFormComponent } from './update-password-form.component';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { provideMockStore } from '@ngrx/store/testing';
+import { provideRouter } from '@angular/router';
 import { routes } from '../../../app.routes';
 
 describe('UpdatePasswordFormComponent', () => {
@@ -18,6 +19,7 @@ describe('UpdatePasswordFormComponent', () => {
   let spySnackbarService: jasmine.SpyObj<SnackbarService>;
   let fixture: ComponentFixture<UpdatePasswordFormComponent>;
   let sub: Subscription;
+  let ngZone: NgZone;
   const initialState = userState;
 
 
@@ -31,14 +33,16 @@ describe('UpdatePasswordFormComponent', () => {
         {
           provide: SnackbarService,
           userClass: SnackbarServiceMock,
-        }
+        },
       ]
     })
     .compileComponents();
     
     fixture = TestBed.createComponent(UpdatePasswordFormComponent);
+
     spySnackbarService = TestBed.inject(SnackbarService) as jasmine.SpyObj<SnackbarService>;
     component = fixture.componentInstance;
+    ngZone = TestBed.inject(NgZone);
     fixture.detectChanges();
   });
 
@@ -97,6 +101,19 @@ describe('UpdatePasswordFormComponent', () => {
     });
   });
 
+  describe('handleUpdatePasswordSuccess', () => {
+    it('should call snackService.openSnackBar when updatePasswordSuccess is dispatched', () => {
+      actions$ = new ReplaySubject(1);
+      actions$.next(updatePasswordSuccess());
+      spyOn(spySnackbarService, 'openSnackBar').and.callThrough();
+
+      sub = component['handleUpdatePasswordSuccess']().subscribe(() => {
+        expect(component.isLoading()).toBeFalse();
+        expect(spySnackbarService.openSnackBar).toHaveBeenCalled();
+      });
+    });
+  })
+
   describe('handleUpdatePasswordFailure', () => {
     it('should call snackService.openSnackBar when updatePasswordFailure is dispatched', () => {
       actions$ = new ReplaySubject(1);
@@ -111,10 +128,12 @@ describe('UpdatePasswordFormComponent', () => {
 
   describe('navigateToLogin', () => {
     it('should navigate to login after 2 seconds', fakeAsync (() => {
-      spyOn(component['router'], 'navigate').and.callThrough();
-      component['navigateToLogin']();
-      tick(2000);
-      expect(component['router'].navigate).toHaveBeenCalled();
+      ngZone.run(() => {
+        spyOn(component['router'], 'navigate').and.callThrough();
+        component['navigateToLogin']();
+        tick(2000);
+        expect(component['router'].navigate).toHaveBeenCalled();
+      });
     }));
   })
 });

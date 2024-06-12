@@ -1,5 +1,5 @@
 import { Actions, ofType } from '@ngrx/effects';
-import { Component, OnInit, WritableSignal, signal } from '@angular/core';
+import { Component, NgZone, OnInit, WritableSignal, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Observable, map } from 'rxjs';
 import { updatePassword, updatePasswordFailure, updatePasswordSuccess } from '../../../reducers/user-store/user.actions';
@@ -35,6 +35,7 @@ export class UpdatePasswordFormComponent implements OnInit {
   constructor(private store: Store<AppState>,
     private actions$: Actions,
     private router: Router,
+    private ngZone: NgZone,
     private snackbarService: SnackbarService) {
     this.formGroup = new FormGroup({
       newPassword: this.newPassword,
@@ -76,7 +77,7 @@ export class UpdatePasswordFormComponent implements OnInit {
    * It will also navigate to the login screen after 2 seconds.
    * @returns Observable<void>
    */
-  private handleUpdatePasswordSuccess(): Observable<void> { 
+  private handleUpdatePasswordSuccess(): Observable<void> {
     return this.actions$.pipe(
       ofType(updatePasswordSuccess),
       map(() => {
@@ -95,7 +96,7 @@ export class UpdatePasswordFormComponent implements OnInit {
   private handleUpdatePasswordFailure(): Observable<void> {
     return this.actions$.pipe(
       ofType(updatePasswordFailure),
-      map((updatePasswordError: { error: IError, type: string}) => {
+      map((updatePasswordError: { error: IError, type: string }) => {
         this.isLoading.update(() => false);
         const { error } = updatePasswordError;
         this.snackbarService.openSnackBar(error.message);
@@ -105,10 +106,12 @@ export class UpdatePasswordFormComponent implements OnInit {
 
   /**
    * This method is used to navigate to the login screen after the password is updated successfully.
-   */  
+   */
   private navigateToLogin(): void {
-    setTimeout(() => {
-      this.router.navigate(['login']);
-    }, 2000);
+    this.ngZone.run(() => {
+      setTimeout(() => {
+        this.router.navigate(['login']);
+      }, 2000);
+    });
   }
 }

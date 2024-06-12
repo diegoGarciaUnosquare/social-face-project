@@ -1,11 +1,12 @@
 import { AppState, userState } from '../../reducers/user-store/user.reducer';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { ReplaySubject, Subscription, of } from 'rxjs';
 import { loginUserFailure, loginUserSuccess } from '../../reducers/user-store/user.actions';
 
 import { IError } from '../../../shared/interfaces/error.interface';
 import { IUser } from '../../../shared/interfaces/user.interface';
 import { LoginFormComponent } from './login-form.component';
+import { NgZone } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { SnackbarService } from '../../../shared/services/snack-bar/snackbar.service';
 import SnackbarServiceMock from '../../../../unit-tests/mocks/services/snackbar-service-mocks';
@@ -22,6 +23,8 @@ describe('LoginFormComponent', () => {
   let initialState: AppState = userState;
   let spySnackbarService: jasmine.SpyObj<SnackbarService>;
   let sub: Subscription;
+  let ngZone: NgZone;
+
   const user: IUser = {
     username: '',
     email: '',
@@ -41,10 +44,10 @@ describe('LoginFormComponent', () => {
       providers: [
         provideRouter(routes),
         provideMockActions(() => actions$),
-        provideMockStore<AppState>({ 
+        provideMockStore<AppState>({
           initialState,
           selectors: [
-            { selector: getUser, value: user},
+            { selector: getUser, value: user },
           ]
         }),
         {
@@ -53,10 +56,11 @@ describe('LoginFormComponent', () => {
         }
       ]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(LoginFormComponent);
     spySnackbarService = TestBed.inject(SnackbarService) as jasmine.SpyObj<SnackbarService>;
+    ngZone = TestBed.inject(NgZone);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -83,7 +87,7 @@ describe('LoginFormComponent', () => {
         username: 'test@test.com',
         password: '123asd2d',
       });
-  
+
       component.onSubmit();
       expect(component.isLoading()).toBeTrue();
     });
@@ -121,16 +125,27 @@ describe('LoginFormComponent', () => {
   describe('handleLoginSuccess', () => {
     it('should call router navigate and loading should be false', (done: DoneFn) => {
       actions$ = new ReplaySubject(1);
-      actions$.next(loginUserSuccess({ user: user}));
+      actions$.next(loginUserSuccess({ user: user }));
 
-      spyOn(component['router'], 'navigate').and.callThrough();
       spyOn(component, 'isLoading').and.callThrough();
+      spyOn(component, 'navigateToPostsPage' as any).and.callThrough();
 
       sub = component['handleLoginSuccess']().subscribe(() => {
         expect(component.isLoading()).toBeFalse();
-        expect(component['router'].navigate).toHaveBeenCalled();
+        expect(component['navigateToPostsPage']).toHaveBeenCalled();
         done();
       });
     });
+  });
+
+  describe('navigateToPostsPage', () => {
+    it('should navigate to posts page', fakeAsync(() => {
+      ngZone.run(() => {
+        spyOn(component['router'], 'navigate').and.callThrough();
+        component['navigateToPostsPage']();
+        tick(2000);
+        expect(component['router'].navigate).toHaveBeenCalled();
+      });
+    }));
   });
 });

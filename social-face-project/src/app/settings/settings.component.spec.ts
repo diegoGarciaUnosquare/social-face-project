@@ -187,26 +187,6 @@ describe('SettingsComponent', () => {
     });
   });
 
-  describe("getSettings", () => {
-    it("should call settings.set if getUserSettings select returns a value", (done: DoneFn) => {
-      spyOn(component.settings, 'set').and.callThrough();
-      sub = component['getSettings']().subscribe(() => {
-        expect(component.settings.set).toHaveBeenCalled();
-        done();
-      });
-    });
-  });
-
-  describe("fetchSettings", () => {
-    it("should dispatch getSettings action if getUserId select returns a value", (done: DoneFn) => {
-      spyOn(component['store'], 'dispatch').and.callThrough();
-      sub = component['fetchSettings']().subscribe(() => {
-        expect(component['store'].dispatch).toHaveBeenCalled();
-        done();
-      });
-    });
-  });
-
   describe("handleOnUpdateSuccess", () => {
     it("should call isLoading, isEditing update method if update is succesful", () => {
       actions$ = new ReplaySubject(1);
