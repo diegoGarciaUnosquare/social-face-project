@@ -32,6 +32,11 @@ export class ProfileComponent implements OnInit {
     this.getProfile().subscribe();
   }
 
+  /**
+   *  This method is responsible for fetching the posts from the store.
+   * And if there are posts, it will update the postsSubject.
+   * @returns Observable<void>
+   */
   private getPosts(): Observable<void> {
     return this.store.select(getRecentPosts).pipe(
       map((posts: Post[]) => {
@@ -40,6 +45,11 @@ export class ProfileComponent implements OnInit {
     );
   }
 
+  /**
+   * This method is responsible for getting the profile from the store
+   * and updating the profileData signal.
+   * @returns Observable<void>
+   */
   private getProfile(): Observable<void> {
     return this.store.select(getUserProfile).pipe(
       map((profile: Profile | null) => {
@@ -50,12 +60,22 @@ export class ProfileComponent implements OnInit {
     );
   }
 
+  /**
+   * This method is responsible for subscribing to the postsSubject and updating
+   * the posts signal.
+   * @returns void
+   */
   private handlePosts(): void {
     this.postsSubject.subscribe((posts: Post[]) => {
       this.posts.update(() => posts);
     });
   }
 
+  /**
+   * This method is responsible for getting the userId from the store
+   * and dispatching the getProfile action to get the profile from the backend.
+   * @returns Observable<void>
+   */
   private getProfileData(): Observable<void> {
     return this.store.select(getUserId).pipe(
       map((userId: string | null | undefined) => {

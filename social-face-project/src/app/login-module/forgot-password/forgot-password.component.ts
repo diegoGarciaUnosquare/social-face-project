@@ -13,7 +13,7 @@ import { ValidateEmailFormComponent } from './validate-email-form/validate-email
   styleUrl: './forgot-password.component.scss'
 })
 export class ForgotPasswordComponent {
-  public showUpdatePasswordForm: WritableSignal<boolean>  = signal(false);
+  public showUpdatePasswordForm: WritableSignal<boolean> = signal(false);
 
   constructor() {
   }

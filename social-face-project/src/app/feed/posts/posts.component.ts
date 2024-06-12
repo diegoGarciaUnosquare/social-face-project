@@ -34,6 +34,10 @@ export class PostsComponent implements OnInit {
     this.handlePosts();
   }
 
+  /**
+   * This method is responsible for fetching the posts from the store
+   * @returns Observable<void>
+   */
   private fetchPosts(): Observable<void> {
     return this.store$.select(getPosts).pipe(
       map((posts: Post[]) => {
@@ -42,16 +46,31 @@ export class PostsComponent implements OnInit {
     );
   }
 
+  /**
+   *  This method is responsible for dispatching the fetchPosts action
+   * and get ads from backend
+   * @returns void
+   */
   private fetchAd(): void {
     this.store$.dispatch(fetchAds());
   }
 
+  /**
+   *  This method is responsible for subscribing to the Subject and updating
+   * the postList signal.
+   * @returns void
+   */
   private handlePosts(): void {
     this.posts.subscribe((posts: Post[]) => {
       this.postList.update(() => posts);
     });
   }
 
+  /**
+   *  This method is responsible of getting the userId from the store
+   * and dispatching the fetchPosts action to get posts from backend
+   * @returns Observable<void>
+   */
   private getPost(): Observable<void> {
     return this.store$.select(getUserId).pipe(
       take(1),
@@ -63,6 +82,11 @@ export class PostsComponent implements OnInit {
     );
   }
 
+  /**
+   *  This method is responsible for getting the ad from the store
+   * and updating the ad signal
+   * @returns Observable<void>
+   */
   private getAd(): Observable<void> {
     return this.store$.select(getAd).pipe(
       take(1),
