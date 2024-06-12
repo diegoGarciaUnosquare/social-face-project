@@ -1,0 +1,1 @@
+import{u as e,v as t}from"./chunk-ANMYY5ZS.js";var o=t("user"),s=e(o,r=>r.error?r.error:null),c=e(o,r=>r.user?r.user:null),u=e(o,r=>r.user?r.user.id:null),n=e(o,r=>r.profile?r.profile:null);export{c as a,u as b,n as c};
