@@ -25,4 +25,15 @@
         font-size: 1rem;
         line-height: 10px;
     }
+
+    .form-group-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        gap: 10px;
+
+        .mat-mdc-slide-toggle  {
+            padding-bottom: 10px;
+        }
+    }
 }

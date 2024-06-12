@@ -4,9 +4,7 @@ import { ReplaySubject, Subscription, of } from 'rxjs';
 import { createUserFailure, createUserSuccess } from '../../reducers/user-store/user.actions';
 
 import { CreateUserComponent } from './create-user.component';
-import { IUser } from '../../../shared/interfaces/user.interface';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { Roles } from '../../../shared/enums/roles.enum';
 import { SnackbarService } from '../../../shared/services/snack-bar/snackbar.service';
 import SnackbarServiceMock from '../../../../unit-tests/mocks/services/snackbar-service-mocks';
 import { provideMockActions } from '@ngrx/effects/testing';
@@ -98,18 +96,6 @@ describe('CreateUserComponent', () => {
 
   describe('handleUserCreationSuccess', () => {
     it('should call next on stepper when user is created', () => {
-      const mockUser: IUser = {
-        email: '',
-        username: '',
-        password: '',
-        firstName: '',
-        lastName: '',
-        birthDate: new Date(),
-        notificationPreference: false,
-        role: Roles.user,
-        token: '',
-      };
-
       component['createUserStepper'] = {
         next: jasmine.createSpy('next')
       } as any;

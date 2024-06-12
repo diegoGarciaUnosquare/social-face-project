@@ -12,11 +12,31 @@ export class SettingsService {
 
   constructor(private httpClient: HttpClient) { }
 
+  /**
+   * This methods fetches the settings from the server
+   * @returns Observable<Settings>
+   */
   public getSettings(): Observable<Settings> {
     return this.httpClient.get(`${this.url}settings`).pipe(
       map((response: any) => {
         return response[0];
       }),
+      catchError((error: HttpErrorResponse) => {
+        throw new Error(error.message);
+      })
+    );
+  }
+
+  /**
+   *  This method updates the settings on the server
+   *  Since the server is a mock server, it does not actually update the settings and put endpoint doesn't exist
+   * So we "fake" the request and simply return the settings object
+   * @param settings Settings
+   * @returns Observable<Settings>
+   */
+  public updateSettings(settings: Settings): Observable<Settings> {
+    return this.httpClient.get(`${this.url}settings`).pipe(
+      map(() => settings),
       catchError((error: HttpErrorResponse) => {
         throw new Error(error.message);
       })

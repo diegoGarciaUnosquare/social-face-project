@@ -34,4 +34,21 @@ export const settingsReducer = createReducer(
             error,
         };
     }),
+    on(SettingsActions.updateSettings, (state) => {
+        return {
+            ...state,
+        };
+    }),
+    on(SettingsActions.updateSettingsSuccess, (state, { settings }) => {
+        return {
+            ...state,
+            settings,
+        };
+    }),
+    on(SettingsActions.updateSettingsFailure, (state, { error }) => {
+        return {
+            ...state,
+            error,
+        };
+    }),
 );

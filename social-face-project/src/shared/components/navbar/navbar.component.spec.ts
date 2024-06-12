@@ -3,6 +3,8 @@ import { Subscription, of } from 'rxjs';
 
 import { BreakpointState } from '@angular/cdk/layout';
 import { NavbarComponent } from './navbar.component';
+import { provideRouter } from '@angular/router';
+import { routes } from '../../../app/app.routes';
 
 describe('NavbarComponent', () => {
   let component: NavbarComponent;
@@ -11,7 +13,10 @@ describe('NavbarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NavbarComponent]
+      imports: [NavbarComponent],
+      providers: [
+        provideRouter(routes)
+      ]
     })
     .compileComponents();
     

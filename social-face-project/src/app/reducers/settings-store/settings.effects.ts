@@ -31,4 +31,19 @@ export class SettingsEffects {
             })
         )),
     ));
+
+    updateSettings$ = createEffect(() => this.actions$.pipe(
+        ofType(SettingsActions.updateSettings),
+        switchMap(({ settings }) => this.settingsService.updateSettings(settings).pipe(
+            map(() => SettingsActions.updateSettingsSuccess({ settings })),
+            catchError((errorData: Error) => {
+                const error: IError = {
+                    message: errorData.message,
+                    status: 500,
+                    url: `${this.url}settings`,
+                };
+                return of(SettingsActions.updateSettingsFailure({ error }));
+            })
+        )),
+    ));
 }
