@@ -58,7 +58,7 @@ export class FeedService {
   public likePost(postId: string): Observable<Post[]> {
     return this.httpClient.get(`${this.url}social-post`).pipe(
       map((response: any) => response.map((post: Post) => {
-          return post.id === postId ? { ...post, likes: post.likes + 1 } : post;
+          return post.id === postId ? { ...post, likes: this.increaseLike(post.likes) } : post;
         }
       )),
       catchError((error: HttpErrorResponse) => {
@@ -91,5 +91,15 @@ export class FeedService {
         throw new Error(error.message);
       })
     );
+  }
+
+  /**
+   * This function receives an amount and returns a new amount increased by 1.
+   * This is a pure function because it doesn't have side effects, and it always returns the same output for the same input.
+   * @param currentAmount: This parameter is used to store the current amount of likes.
+   * @returns number
+   */
+  private increaseLike(currentAmount: number): number {
+    return currentAmount + 1;
   }
 }

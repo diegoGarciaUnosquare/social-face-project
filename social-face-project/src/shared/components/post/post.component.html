@@ -5,7 +5,7 @@
         </p>
     </mat-card-subtitle>
     @if(post?.imageUrl!) {
-        <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of post">
+        <img class="post-image" mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of post">
     }
     <mat-card-content>
         @if (post?.comments!.length > 0) {
@@ -18,6 +18,7 @@
         <div class="post-amounts-container">
             <span class="post-like-amount" aria-label="Message to show how many likes the post has."> Likes: {{ likes() }} </span>
             <span class="post-comments-amount" aria-label="Message to show how many comments the post has."> Comments: {{ commentsAmount() }} </span>
+            <span class="post-date"> {{ post?.createdAt | date: 'shortDate' }} </span>
         </div>
     </mat-card-content>
     <mat-card-footer>
@@ -38,8 +39,10 @@
             </form>
         }
     </mat-card-footer>
-    <mat-card-actions aria-label="post action button section">
-        <button mat-button data-post-like-btn="" aria-label="Like button" (click)="onLike()">LIKE</button>
-        <button mat-button data-post-comment-btn="" aria-label="Add comment button" (click)="onAddComment()">ADD COMMENT</button>
-    </mat-card-actions>
+    @if(!readOnly) {
+        <mat-card-actions aria-label="post action button section">
+            <button mat-button data-post-like-btn="" aria-label="Like button" (click)="onLike()">LIKE</button>
+            <button mat-button data-post-comment-btn="" aria-label="Add comment button" (click)="onAddComment()">ADD COMMENT</button>
+        </mat-card-actions>
+    }
 </mat-card>

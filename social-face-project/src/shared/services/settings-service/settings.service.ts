@@ -18,9 +18,7 @@ export class SettingsService {
    */
   public getSettings(): Observable<Settings> {
     return this.httpClient.get(`${this.url}settings`).pipe(
-      map((response: any) => {
-        return response[0];
-      }),
+      map((response: any) => response[0]),
       catchError((error: HttpErrorResponse) => {
         throw new Error(error.message);
       })

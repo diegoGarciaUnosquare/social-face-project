@@ -6,7 +6,8 @@ import { catchError, map, of, switchMap } from 'rxjs';
 import { IError } from '../../../shared/interfaces/error.interface';
 import { IUser } from '../../../shared/interfaces/user.interface';
 import { Injectable } from '@angular/core';
-import { LocalStorageService } from '../../../shared/services/local-storage-service/local-storage.service';
+import { Profile } from '../../../shared/interfaces/profile.interface';
+import { ProfileService } from '../../../shared/services/profile-service/profile.service';
 import { UserService } from '../../../shared/services/user-service/user-service.service';
 
 @Injectable()
@@ -15,8 +16,8 @@ export class UserEffects {
 
     constructor(
         private actions$: Actions,
-        private localStorageService: LocalStorageService,
         private userService: UserService,
+        private profileService: ProfileService,
     ) { }
 
     createUser$ = createEffect(() => this.actions$.pipe(
@@ -81,10 +82,7 @@ export class UserEffects {
         ofType(UserActions.loginUser),
         map(action => action),
         switchMap(({ username, password }) => this.userService.login(username, password).pipe(
-            map((user: IUser) => {
-                this.localStorageService.setItem('loginToken', user.token!);
-                return UserActions.loginUserSuccess({ user });
-            }),
+            map((user: IUser) => UserActions.loginUserSuccess({ user })),
             catchError((errorData: Error) => {
                 const error: IError = {
                     message: errorData.message,
@@ -94,5 +92,34 @@ export class UserEffects {
                 return of(UserActions.loginUserFailure({ error }));
             })
         )),
+    ));
+
+    userProfile$ = createEffect(() => this.actions$.pipe(
+        ofType(UserActions.getProfile),
+        map(action => action.userId),
+        switchMap((userId: string) => this.profileService.getProfileData(userId).pipe(
+            map((profile: Profile) => UserActions.getProfileSuccess({ profile })),
+            catchError((errorData: Error) => {
+                const error: IError = {
+                    message: errorData.message,
+                    status: 500,
+                    url: `${this.url}get-profile`,
+                };
+                return of(UserActions.getProfileFailure({ error }));
+            })
+        )),
+    ));
+
+    logoutUser$ = createEffect(() => this.actions$.pipe(
+        ofType(UserActions.logoutUser),
+        map(() => UserActions.logoutUserSuccess()),
+        catchError((errorData: Error) => {
+            const error: IError = {
+                message: errorData.message,
+                status: 500,
+                url: `${this.url}logout-user`,
+            };
+            return of(UserActions.logoutUserFailure({ error }));
+        })
     ));
 }

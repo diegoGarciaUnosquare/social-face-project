@@ -23,6 +23,11 @@ export const routes: Routes = [
                 path: 'settings',
                 pathMatch: 'full',
                 loadComponent: () => import('./settings/settings.component').then(c => c.SettingsComponent),
+            },
+            {
+                path: 'profile',
+                pathMatch: 'full',
+                loadComponent: () => import('./profile/profile.component').then(c => c.ProfileComponent),
             }
         ]
     },

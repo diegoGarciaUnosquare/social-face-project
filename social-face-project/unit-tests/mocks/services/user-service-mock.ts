@@ -19,6 +19,7 @@ class UserServiceMock {
     validateEmail: jasmine.Spy = jasmine.createSpy('validateEmail').and.returnValue(of(false));
     updatePassword: jasmine.Spy = jasmine.createSpy('updatePassword').and.returnValue(of('12341'));
     login: jasmine.Spy = jasmine.createSpy('login').and.returnValue(of(this.mockUser));
+    logout: jasmine.Spy = jasmine.createSpy('logout').and.returnValue(of());
 }
 
 export default UserServiceMock;

@@ -1,9 +1,11 @@
 import { ReplaySubject, Subscription, of, throwError } from 'rxjs';
-import { createUser, loginUser, updatePassword, validateEmail } from './user.actions';
+import { createUser, getProfile, loginUser, updatePassword, validateEmail } from './user.actions';
 
 import { IUser } from '../../../shared/interfaces/user.interface';
 import LocalStorageMockService from '../../../../unit-tests/mocks/services/local-storage-service-mock';
 import { LocalStorageService } from '../../../shared/services/local-storage-service/local-storage.service';
+import { ProfileService } from '../../../shared/services/profile-service/profile.service';
+import ProfileServiceMock from '../../../../unit-tests/mocks/services/profile-service-mock';
 import { TestBed } from '@angular/core/testing';
 import { UserEffects } from './user.effects';
 import { UserService } from '../../../shared/services/user-service/user-service.service';
@@ -14,6 +16,7 @@ describe('UserEffects', () => {
   let actions$: ReplaySubject<any>;
   let spyUserService: jasmine.SpyObj<UserService>;
   let spyLocalStorageService: jasmine.SpyObj<LocalStorageService>;
+  let spyProfileService: jasmine.SpyObj<ProfileService>;
   let effects: UserEffects;
   let sub: Subscription;
   const url: string = 'https://my-json-server.typicode.com/diegoGarciaUnosquare/social-face-project-mock-server/';
@@ -30,12 +33,17 @@ describe('UserEffects', () => {
         {
           provide: LocalStorageService,
           useClass: LocalStorageMockService,
+        },
+        {
+          provide: ProfileService,
+          useClass: ProfileServiceMock,
         }
       ]
     });
 
     effects = TestBed.inject(UserEffects);
     spyUserService = TestBed.inject(UserService) as jasmine.SpyObj<UserService>;
+    spyProfileService = TestBed.inject(ProfileService) as jasmine.SpyObj<ProfileService>;
     spyLocalStorageService = TestBed.inject(LocalStorageService) as jasmine.SpyObj<LocalStorageService>;
   });
 
@@ -226,6 +234,54 @@ describe('UserEffects', () => {
             url: `${url}login-user`
           },
           type: '[Login page] Login Users Failure'
+        });
+        done();
+      });
+    });
+  });
+
+  describe("userProfile - Effect", () => {
+    it("should return getProfileSuccess action and call getProfileData", (done: DoneFn) => {
+      actions$ = new ReplaySubject(1);
+      actions$.next(getProfile({ userId: '123' }));
+      
+      spyProfileService.getProfileData.and.returnValue(of({
+        id: '123',
+        firstName: 'John',
+        lastName: 'Doe',
+        bio: '',
+        profilePicture: '',
+        userId: '123',
+      }));
+      sub = effects.userProfile$.subscribe((result) => {
+        expect(result).toEqual({
+          type: '[Profile page] Get Profile Success',
+          profile: {
+            id: '123',
+            firstName: 'John',
+            lastName: 'Doe',
+            bio: '',
+            profilePicture: '',
+            userId: '123',
+          }
+        });
+        done();
+      });
+    });
+
+    it("should return getProfileFailure if error", (done: DoneFn) => {
+      actions$ = new ReplaySubject(1);
+      actions$.next(getProfile({ userId: '123' }));
+
+      spyProfileService.getProfileData.and.returnValue(throwError(() => new Error('Error getting profile')));
+      sub = effects.userProfile$.subscribe((result) => {
+        expect(result).toEqual({
+          error: {
+            message: 'Error getting profile',
+            status: 500,
+            url: `${url}get-profile`
+          },
+          type: '[Profile page] Get Profile Failure'
         });
         done();
       });

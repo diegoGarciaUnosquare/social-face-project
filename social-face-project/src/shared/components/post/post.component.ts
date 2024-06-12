@@ -1,8 +1,8 @@
+import { CommonModule, DatePipe } from '@angular/common';
 import { Component, Input, OnInit, WritableSignal, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { addComment, likePost } from '../../../app/reducers/feed-store/feed.actions';
 
-import { CommonModule } from '@angular/common';
 import { FeedState } from '../../../app/reducers/feed-store/feed.reducer';
 import { MaterialComponentsModule } from '../../modules/material-components.module';
 import { Post } from '../../interfaces/post.interface';
@@ -11,13 +11,14 @@ import { Store } from '@ngrx/store';
 @Component({
   selector: 'app-post',
   standalone: true,
-  imports: [CommonModule, MaterialComponentsModule, ReactiveFormsModule],
+  imports: [CommonModule, MaterialComponentsModule, ReactiveFormsModule, DatePipe],
   templateUrl: './post.component.html',
   styleUrl: './post.component.scss'
 })
 export class PostComponent implements OnInit {
   @Input() public post: Post | null = null;
   @Input() public index: number = 0;
+  @Input() public readOnly: boolean = false;
 
   public addCommentField: FormControl = new FormControl('', Validators.required);
   public commentsAmount: WritableSignal<number> = signal(0);

@@ -88,4 +88,15 @@ export class UserService {
       })
     );
   }
+
+  public logout(): Observable<boolean> {
+    return this.httpService.post('https://my-json-server.typicode.com/diegoGarciaUnosquare/social-face-feed-user-mock-backend/logout-user', {}).pipe(
+      map(() => {
+        return true;
+      }),
+      catchError((error: HttpErrorResponse) => {
+        throw new Error(error.message);
+      })
+    );
+  }
 }

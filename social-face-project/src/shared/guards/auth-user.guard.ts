@@ -5,7 +5,6 @@ import { AppState } from '../../app/reducers/user-store/user.reducer';
 import { map, take } from 'rxjs';
 import { getUser } from '../../app/reducers/user-store/user.selectors';
 import { IUser } from '../interfaces/user.interface';
-import { LocalStorageService } from '../services/local-storage-service/local-storage.service';
 
 /**
  * Guard to check if user is authenticated (counts with a token).
@@ -15,16 +14,10 @@ import { LocalStorageService } from '../services/local-storage-service/local-sto
 export const authUserGuard: CanActivateFn = () => {
   const store = inject(Store<AppState>);
   const router = inject(Router);
-  const localStorageService = inject(LocalStorageService);
 
   return store.select(getUser).pipe(
     take(1),
     map((user: IUser | null) => {
-      const localStorageToken = localStorageService.getItem('loginToken');
-      if (localStorageToken) {
-        return true;
-      }
-
       if (user && user.token !== '') {
         return true;
       } else {

@@ -4,14 +4,17 @@ import { createReducer, on } from '@ngrx/store';
 
 import { IError } from '../../../shared/interfaces/error.interface';
 import { IUser } from '../../../shared/interfaces/user.interface';
+import { Profile } from '../../../shared/interfaces/profile.interface';
 
 export interface AppState {
     user: IUser | null;
+    profile: Profile | null;
     error: IError | null;
 }
 
 export const userState: AppState = {
     user: null,
+    profile: null,
     error: null,
 };
 
@@ -57,6 +60,36 @@ export const userReducer = createReducer(
         };
     }),
     on(UserActions.loginUserFailure, (state, { error }) => {
+        return {
+            ...state,
+            error,
+        };
+    }),
+    on(UserActions.getProfile, (state) => { return { ...state }; }),
+    on(UserActions.getProfileSuccess, (state, { profile }) => {
+        return {
+            ...state,
+            profile,
+        };
+    }),
+    on(UserActions.getProfileFailure, (state, { error }) => {
+        return {
+            ...state,
+            error,
+        };
+    }),
+    on(UserActions.logoutUser, (state) => {
+        return {
+            ...state,
+        };
+    }),
+    on(UserActions.logoutUserSuccess, (state) => {
+        return {
+            ...state,
+            user: null,
+        };
+    }),
+    on(UserActions.logoutUserFailure, (state, { error }) => {
         return {
             ...state,
             error,

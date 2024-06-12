@@ -18,3 +18,8 @@ export const getUserId = createSelector(
     selectUserState,
     (state: AppState) => state.user ? state.user.id : null,
 );
+
+export const getUserProfile = createSelector(
+    selectUserState,
+    (state: AppState) => state.profile ? state.profile : null,
+);

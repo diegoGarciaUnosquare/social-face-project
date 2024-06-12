@@ -1,0 +1,22 @@
+<section class="profile-section-container" data-profile-section="">
+    <div class="profile-data-section">
+        <div class="profile-data">
+            <div class="profile-image-container">
+                <img class="profile-image" [src]="profileData()?.profilePicture" aria-label="User Profile Picture" alt="social_face_logo">
+                <h2 aria-label="User first and last name">
+                    {{profileData()?.firstName}} {{profileData()?.lastName}}
+                </h2>
+            </div>
+            <p class="profile-bio-text" aria-label="profile biography"> {{ profileData()?.bio }} </p>
+        </div>
+    </div>
+    <div class="profile-post-section">
+        @for(post of posts(); track post.id; let idx = $index) {
+            <article class="post-article" aria-label="Post">
+                <app-post [post]="post" [index]="idx" [readOnly]="true"></app-post>
+            </article>
+        } @empty {
+            <p class="empty-posts-message" aria-label="No posts message">No posts to show</p>
+        }
+    </div>
+</section>
