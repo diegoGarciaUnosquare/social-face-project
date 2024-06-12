@@ -41,8 +41,12 @@ This command will open the cypress interface, where you can select the browser u
 selecting the test that you want to run.
 
 ## Backend
-The backend for this project is being mocked. This project implements "json-placeholder" as the backend. The data is being fetched from the following link: [json-placeholder](https://my-json-server.typicode.com/diegoGarciaUnosquare/social-face-project-mock-server/)
-[json-placeholder-feed-mock-backend](https://my-json-server.typicode.com/diegoGarciaUnosquare/social-face-feed-user-mock-backend)
+The backend for this project is being mocked. This project implements "json-placeholder" as the backend. The data is being fetched from the following link: [json-placeholder user-mocked-backend](https://my-json-server.typicode.com/diegoGarciaUnosquare/social-face-project-mock-server/)
+[json-placeholder feed-mocked-backend](https://my-json-server.typicode.com/diegoGarciaUnosquare/social-face-feed-user-mock-backend)
+
+You can find the respective github repository for those two endpoints in the following links:
+[Mocked Backend user](https://github.com/diegoGarciaUnosquare/social-face-project-mock-server)
+[Mocked Backend Feed](https://github.com/diegoGarciaUnosquare/social-face-feed-user-mock-backend)
 
 ## CI/CD Pipeline
 CI/CD is being handle with GitHub Actions. The pipeline is triggered when a push is made to the main branch. 
