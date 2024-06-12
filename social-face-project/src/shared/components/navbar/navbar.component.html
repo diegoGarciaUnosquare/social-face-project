@@ -1,10 +1,9 @@
 <mat-toolbar class="navbar-container" color="primary" data-navbar-container="">
-    @if(shouldDisplayMenu() | async) {
-        <button mat-icon-button class="menu-icon" aria-label="icon button - menu" data-sidenav-menu-button="">
-            <mat-icon>menu</mat-icon>
-        </button>
-    }
-    <span>Social Face</span>
+    <a [routerLink]="['/feed/posts']" routerLinkActive="router-link-active"  mat-button aria-label="Feed navigation option" data-navbar-option-feed="">
+       <span class="social-face-app-title">
+            Social Face
+       </span>
+    </a>
     <span class="spacer"></span>
 
     @if(!(shouldDisplayMenu() | async)) {
@@ -18,7 +17,7 @@
     <button class="profile-button" mat-button [matMenuTriggerFor]="menu" aria-label="Icon button - Profile" data-navbar-profile="">
         <img class="profile-image-navbar" src="assets/social_face_logo.svg" alt="social_face_logo">
     </button>
-    <mat-menu #menu="matMenu">
+    <mat-menu #menu="matMenu" data-nav-menu-list="">
         <button (click)="navigateTo('/feed/settings')"
             mat-menu-item
             aria-label="Settings Navigation menu button"
