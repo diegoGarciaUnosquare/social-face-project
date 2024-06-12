@@ -58,6 +58,6 @@ export class ForgotPasswordPageObject {
         cy.get(this.forgotPasswordContainer).within((elem: JQuery<HTMLElement>) => {
             cy.wrap(elem).find(this.returnToLoginButton).should('be.visible');
             cy.wrap(elem).find(this.returnToLoginButton).click();
-        })
+        });
     }
 }

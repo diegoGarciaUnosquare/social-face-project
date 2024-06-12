@@ -21,6 +21,7 @@ export class CreateUserPageObject {
     nextButton = '[data-next-button]';
     accountCreatedTitle = '[data-account-created-title]';
     navigateToLoginBtn = '[data-navigate-login-button]';
+    returnToLoginButton = '[data-return-to-login-btn]';
 
     public enterUserDataInForm(): void {
         cy.get(this.createUserForm).then((form: JQuery<HTMLElement>) => {
@@ -57,6 +58,13 @@ export class CreateUserPageObject {
         cy.get(this.createUserStepper).then((stepper: JQuery<HTMLElement>) => {
             cy.wrap(stepper).find(this.accountCreatedTitle).should('be.visible');
             cy.wrap(stepper).find(this.navigateToLoginBtn).should('be.visible');
+        });
+    }
+
+    public clickReturnToLoginButton(): void {
+        cy.get(this.createUserStepper).within((elem: JQuery<HTMLElement>) => {
+            cy.wrap(elem).find(this.returnToLoginButton).should('be.visible');
+            cy.wrap(elem).find(this.returnToLoginButton).click();
         });
     }
 }

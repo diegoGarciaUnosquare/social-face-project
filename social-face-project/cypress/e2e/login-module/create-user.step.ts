@@ -41,3 +41,7 @@ Then("the user is taken account creation success screen", () => {
 Then("the user taps the navigate to login screen button", () => {
     createUserPageObjects.clickNavigateToLoginButton();
 });
+
+When("the user clicks on the return to login screen button", () => {
+    createUserPageObjects.clickReturnToLoginButton();
+});
