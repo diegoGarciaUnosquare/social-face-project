@@ -39,6 +39,11 @@ export class PostComponent implements OnInit {
     this.elementId.update(() => `post-container-${this.index}`);
   }
 
+  /**
+   *  This method is used to submit a new comment
+   * If the form is valid, it will dispatch the addComment action
+   * @returns void
+   */
   public onSubmit(): void {
     if (this.formGroup.valid) {
       this.store.dispatch(
@@ -52,10 +57,19 @@ export class PostComponent implements OnInit {
     }
   }
 
+  /**
+   * This method is used to like a post
+   * It will dispatch the likePost action and increase the amount of likes
+   * @returns void
+   */
   public onLike(): void {
     this.store.dispatch(likePost({ postId: this.post!.id }));
   }
 
+  /**
+   * This method is used to toggle the comments form
+   * @returns void
+   */
   public onAddComment(): void {
     this.showCommentsForm.update((value: boolean) => !value);
   }

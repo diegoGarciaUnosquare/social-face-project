@@ -89,6 +89,11 @@ export class UserService {
     );
   }
 
+  /**
+   *  This method is used to logout a user. It sends a request to a mocked backend
+   * and based on the response we will determine if the user was logged out successfully.
+   * @returns Observable<boolean>
+   */
   public logout(): Observable<boolean> {
     return this.httpService.post('https://my-json-server.typicode.com/diegoGarciaUnosquare/social-face-feed-user-mock-backend/logout-user', {}).pipe(
       map(() => {

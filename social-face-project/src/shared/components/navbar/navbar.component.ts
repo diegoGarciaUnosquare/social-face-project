@@ -44,16 +44,31 @@ export class NavbarComponent implements OnInit {
       .pipe(map(({ matches }) => (matches ? true : false)));
   }
 
+  /**
+   *  This method is used to navigate the user to a different route
+   * based on the option selected on the navbar
+   * @param route a path to redirect the user to
+   * @returns void
+   */
   public navigateTo(route: string): void {
     this.ngZone.run(() => {
       this.router.navigate([route]);
     });
   }
 
+  /**
+   *  This method is used to log the user out of the application
+   * @returns void
+   */
   public logout(): void {
     this.store.dispatch(logoutUser());
   }
 
+  /**
+   *  This method is used to handle the logout failure scenario.
+   * If the logout fails, a snackbar is displayed with the error message.
+   * @returns Observable<void>
+   */
   private handleLogoutFailure(): Observable<void> {
     return this.actions$.pipe(
       ofType(loginUserFailure),
@@ -64,6 +79,11 @@ export class NavbarComponent implements OnInit {
   
   }
 
+  /**
+   *  This method is used to handle the logout success scenario.
+   * If the logout is successful, the user is redirected to the login page.
+   * @returns Observable<void>
+   */
   private handleLogoutSuccess(): Observable<void> {
     return this.actions$.pipe(
       ofType(logoutUserSuccess),
