@@ -2,6 +2,14 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.5.
 
+## Architecture / Flow Chart of the Project
+You can find the Architecture and the flow chart of the project on the following Link:
+[Architecture / Flow Chart](https://www.figma.com/design/Pt8xIZCyohDNri6ArF9RbJ/Social-Face-Architecture%2FFlow-Chart?node-id=0-1&t=3dHIf47aRqHo3vbm-0)
+
+
+## Design
+The UI Design for this app, has been made with Figma. You can find the design in the following link: [Figma Design](https://www.figma.com/design/tp9ugpTxLEOVx32KXj4FOx/social-face-project?node-id=11-1833&t=DnOaM1fxUYRI0QUv-0)
+
 ## First Steps:
 1. Clone the repository
 2. Navigate to the project folder(./social-face-project)
@@ -46,6 +54,3 @@ CI/CD is being handle with GitHub Actions. The pipeline is triggered when a push
  And you can find the deployed application in the link: [SocialFace](https://diegogarciaunosquare.github.io/social-face-project/)
 
  CI/CD pipeline runs: [runs](https://github.com/diegoGarciaUnosquare/social-face-project/actions/workflows/main.yml)
-
- ## Design
-The UI Design for this app, has been made with Figma. You can find the design in the following link: [Figma Design](https://www.figma.com/design/tp9ugpTxLEOVx32KXj4FOx/social-face-project?node-id=11-1833&t=DnOaM1fxUYRI0QUv-0)
