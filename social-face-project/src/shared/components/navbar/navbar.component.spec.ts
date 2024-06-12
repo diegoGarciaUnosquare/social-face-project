@@ -3,6 +3,8 @@ import { Subscription, of } from 'rxjs';
 
 import { BreakpointState } from '@angular/cdk/layout';
 import { NavbarComponent } from './navbar.component';
+import { NgZone } from '@angular/core';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { provideRouter } from '@angular/router';
 import { routes } from '../../../app/app.routes';
 
@@ -10,10 +12,11 @@ describe('NavbarComponent', () => {
   let component: NavbarComponent;
   let fixture: ComponentFixture<NavbarComponent>;
   let sub: Subscription;
+  let ngZone: NgZone;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NavbarComponent],
+      imports: [NavbarComponent, NoopAnimationsModule],
       providers: [
         provideRouter(routes)
       ]
@@ -21,6 +24,7 @@ describe('NavbarComponent', () => {
     .compileComponents();
     
     fixture = TestBed.createComponent(NavbarComponent);
+    ngZone = TestBed.inject(NgZone);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -50,6 +54,16 @@ describe('NavbarComponent', () => {
       spyOn(component['breakpointObserver'], 'observe').and.returnValue(of(matches));
       sub = component.shouldDisplayMenu().subscribe((result) => {
         expect(result).toBeFalse();
+      });
+    });
+  });
+
+  describe('navigateTo', () => {
+    it('should navigate to the route', () => {
+      ngZone.run(() => {
+        spyOn(component['router'], 'navigate').and.callThrough();
+        component.navigateTo('test');
+        expect(component['router'].navigate).toHaveBeenCalledWith(['test']);
       });
     });
   });

@@ -2,4 +2,17 @@
   .spacer {
     flex: 1 1 auto;
   }
+
+  .profile-button {
+    height: 52px;
+    width: 52px;
+
+    .profile-image-navbar {
+      height: 52px;
+      position: relative;
+      top: 5px;
+      width: 52px;
+    }
+  }
+  
 }

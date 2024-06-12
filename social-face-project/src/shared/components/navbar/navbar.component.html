@@ -6,10 +6,27 @@
     }
     <span>Social Face</span>
     <span class="spacer"></span>
+    <a [routerLink]="['/feed/posts']" routerLinkActive="router-link-active"  mat-button aria-label="Feed navigation option" data-navbar-option-feed="">
+        Feed
+    </a>
     <a [routerLink]="['/feed/settings']" routerLinkActive="router-link-active"  mat-button aria-label="Settings navigation option" data-navbar-option-settings="">
         Settings
     </a>
-    <button mat-icon-button aria-label="Icon button - Profile" data-navbar-profile="">
-        <mat-icon>share</mat-icon>
+    <button class="profile-button" mat-button [matMenuTriggerFor]="menu" aria-label="Icon button - Profile" data-navbar-profile="">
+        <img class="profile-image-navbar" src="assets/social_face_logo.svg" alt="social_face_logo">
     </button>
+    <mat-menu #menu="matMenu">
+        <button (click)="navigateTo('/feed/settings')"
+            mat-menu-item
+            aria-label="Settings Navigation menu button"
+            data-menu-navigate-settings="">
+            Settings
+        </button>
+        <button (click)="navigateTo('/feed/profile')"
+            mat-menu-item
+            aria-label="Profile Navigation menu button"
+            data-menu-navigate-profile="">
+            Profile
+        </button>
+      </mat-menu>
 </mat-toolbar>

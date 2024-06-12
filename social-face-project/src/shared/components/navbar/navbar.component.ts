@@ -1,10 +1,10 @@
 import { AsyncPipe, CommonModule } from '@angular/common';
+import { Component, NgZone } from '@angular/core';
 import { Observable, map } from 'rxjs';
+import { Router, RouterModule } from '@angular/router';
 
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component } from '@angular/core';
 import { MaterialComponentsModule } from '../../modules/material-components.module';
-import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -14,7 +14,11 @@ import { RouterModule } from '@angular/router';
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent {
-  constructor(private breakpointObserver: BreakpointObserver) { }
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    private ngZone: NgZone,
+    private router: Router
+  ) { }
 
   /**
    *  Method in charge of determining if the menu should be displayed
@@ -25,5 +29,11 @@ export class NavbarComponent {
     return this.breakpointObserver
       .observe('(max-width: 800px)')
       .pipe(map(({ matches }) => (matches ? true : false)));
+  }
+
+  public navigateTo(route: string): void {
+    this.ngZone.run(() => {
+      this.router.navigate([route]);
+    });
   }
 }
