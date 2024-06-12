@@ -13,3 +13,7 @@ Then("the user clicks the profile option on the navbar", () => {
 Then("the user should be redirected to the profile page", () => {
     profilePageObject.userIsOnProfilePage();
 });
+
+Then("the user should see post on his profile", () => {
+    profilePageObject.userShouldSeePost();
+});

@@ -20,15 +20,11 @@ export class NavbarPageObject {
     }
 
     public userClickProfileOption(): void {
-        cy.get(this.navMenuList).within((elem: JQuery<HTMLElement>) => {
-            cy.wrap(elem).find(this.profileOptionButton).click();
-        });
+        cy.get(this.profileOptionButton).click();
     }
 
     public userClickLogoutOption(): void {
-        cy.get(this.navMenuList).within((elem: JQuery<HTMLElement>) => {
-            cy.wrap(elem).find(this.logoutOptionButton).click();
-        });
+        cy.get(this.logoutOptionButton).click();
     }
 
     public userClickFeedOption(): void {
